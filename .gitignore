@@ -6,6 +6,7 @@ __pycache__
 db.sqlite3
 media
 migrations
+test_reserve.py
 
 # Backup files # 
 *.bak 
