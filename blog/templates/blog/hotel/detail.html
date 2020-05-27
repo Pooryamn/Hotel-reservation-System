@@ -1,0 +1,31 @@
+<h1>Hello</h1>
+
+<!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
+
+<!-- <form action="" method="post">
+{% csrf_token %}
+    <input type="text" name="begin">
+    <input type="text" name="end">
+    <input type="submit" value="Vote">
+</form>
+ -->
+
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+
+{{form.media}}
+
+{% for i in rooms %}
+{% if i.room_type == "vip" %}
+<p style="background: Blue">
+    {{i.id}} {{i.hotel}}
+</p>
+{% else %}
+<p style="background: Red">
+    {{i.id}} {{i.hotel}}
+</p>
+{% endif %}
+{% endfor %}
