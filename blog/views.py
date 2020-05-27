@@ -4,7 +4,7 @@ from .models import Hotel, Room
 from .forms import HotelDatePickerForm
 
 
-def hotel_detail(request, id):
+def hotel_pre_reserve(request, id):
     error_message = False
     if request.method == "POST":
         # begin = request.POST['begin']
@@ -36,7 +36,7 @@ def hotel_detail(request, id):
     else:
         avl_rooms = []
 
-    return render(request, 'blog/hotel/detail.html',
+    return render(request, 'blog/hotel/reserve.html',
             {'hotel': hotel, 'rooms': avl_rooms, 'error_message': error_message, 'form':form})
 
 
