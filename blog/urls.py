@@ -5,6 +5,5 @@ from . import views
 
 urlpatterns = [
     path('hotel/<id>/reserve', views.hotel_reserve, name='hotel_reserve'),
-    path('hotel/complete-reserve', views.complete_reserve, name='complete_reserve'),
     path('hotel/reserve/<tracking_code>', views.reserve_factor, name='reserve_factor'),
 ]

@@ -2,11 +2,11 @@
 
 {% load jalali_tags%}
 
-{{reserve.user.username}}
-{{reserve.trackingCode}}
-{{reserve.beginDate|to_jalali:'%y-%m-%d'}}
-{{reserve.endDate|to_jalali:'%y-%m-%d'}}
-{{reserve.totalPrice}}
+{{reserve.user.username}}<br>
+{{reserve.trackingCode}}<br>
+{{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br>
+{{reserve.endDate|to_jalali:'%y-%m-%d'}}<br>
+{{reserve.totalPrice}}<br>
 {% for room in reserve.room.all%}
     {{room}}<br>
 

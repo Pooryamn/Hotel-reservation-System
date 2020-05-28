@@ -12,7 +12,6 @@ class HotelDatePickerForm(forms.Form):
         cleaned_data = super(HotelDatePickerForm, self).clean()
         begin = cleaned_data.get('begin')
         end = cleaned_data.get('end')
-        # print(begin, date.today())
         # Check if begin date is greater than today date
         if begin < date.today() or begin >= end:
             raise forms.ValidationError('تاریخ ها نامعتبر است.')

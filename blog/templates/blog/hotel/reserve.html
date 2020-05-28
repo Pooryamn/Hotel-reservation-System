@@ -13,22 +13,24 @@
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
+    <input type="hidden" value="form1" name="form_select">
     <input type="submit" value="Search">
 </form>
 
 {{form.media}}
 
 
-<form method="post" action="/hotel/complete-reserve">{% csrf_token %}
+<form method="post">{% csrf_token %}
   <ul class="ks-cboxtags">
     {% for i in rooms %}
-    <li><input type="checkbox" id="{{ i.id }}" value="{{ i.id }}" name="checked_rooms"><label for="{{ i.id }}">اتاق {{i.id}}</label></li>
+    <li><input type="checkbox" id="{{ i.id }}" value="{{ i.id }}" name="selected_rooms"><label for="{{ i.id }}">اتاق {{i.id}}</label></li>
     {% endfor %}
   </ul>
 
   <input type="hidden" value="{{ begin|date:'Y-m-d' }}" name="begin">
   <input type="hidden" value="{{ end|date:'Y-m-d' }}" name="end">
   <input type="hidden" value="{{ hotel.id }}" name="hotel_id">
+  <input type="hidden" value="form2" name="form_select">
 
   <input type="submit" value="Reserve">
 </form>
