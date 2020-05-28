@@ -1,6 +1,6 @@
 <h1>Hello</h1>
 
-<!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <!-- <form action="" method="post">
 {% csrf_token %}
@@ -13,19 +13,119 @@
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit">
+    <input type="submit" value="Search">
 </form>
 
 {{form.media}}
 
-{% for i in rooms %}
-{% if i.room_type == "vip" %}
-<p style="background: Blue">
-    {{i.id}} {{i.hotel}}
-</p>
-{% else %}
-<p style="background: Red">
-    {{i.id}} {{i.hotel}}
-</p>
-{% endif %}
-{% endfor %}
+
+<form method="post" action="/hotel/complete-reserve">{% csrf_token %}
+  <ul class="ks-cboxtags">
+    {% for i in rooms %}
+    <li><input type="checkbox" id="{{ i.id }}" value="{{ i.id }}" name="checked_rooms"><label for="{{ i.id }}">اتاق {{i.id}}</label></li>
+    {% endfor %}
+  </ul>
+
+  <input type="hidden" value="{{ begin|date:'Y-m-d' }}" name="begin">
+  <input type="hidden" value="{{ end|date:'Y-m-d' }}" name="end">
+  <input type="hidden" value="{{ hotel.id }}" name="hotel_id">
+
+  <input type="submit" value="Reserve">
+</form>
+
+</div>
+
+<style>
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #FFEFBA;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFFFFF, #FFEFBA);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.container {
+    max-width: 640px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+ul.ks-cboxtags {
+    list-style: none;
+    padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    color: #adadad;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    /*content: "\f067";*/
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    /*content: "\f00c";*/
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid #1bdbf8;
+    background-color: #12bbd4;
+    color: #fff;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+</style>
