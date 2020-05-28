@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 from .models import Hotel, Room, Reserve
 from .forms import HotelDatePickerForm
 
@@ -61,6 +62,7 @@ def check_room(rl, begin, end):
     return avl_rooms
 
 
+@login_required
 @require_http_methods(["POST"])
 def complete_reserve(request):
     checked_rooms = request.POST.getlist('checked_rooms')
@@ -103,6 +105,7 @@ def complete_reserve(request):
         return HttpResponseRedirect(reverse('blog:hotel_reserve', args=(hotel_id,)))
 
 
+@login_required
 def reserve_factor(request, tracking_code):
     reserve = get_object_or_404(Reserve, trackingCode=tracking_code)
     return render(request, 'blog/hotel/reserve_factor.html',
