@@ -94,6 +94,10 @@ def make_reserve(request):
             
             total_price = total_price*days
 
+            ### calculate discount
+            hotel = get_object_or_404(Hotel, id=hotel_id)
+            total_price = (total_price*(100 - hotel.discount))/100
+
             reserve = Reserve.objects.create(user=request.user, beginDate=begin,
                                              endDate=end, totalPrice=total_price)
             reserve.room.set(room_list)
