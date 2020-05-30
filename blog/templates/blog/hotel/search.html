@@ -1,0 +1,56 @@
+<h2>Search</h2>
+
+<!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
+
+<form method="get">
+    <input type="text" {%if hotel_name%}value={{hotel_name}}{%endif%} name="hotel_name">
+    <input type="hidden" value="form1" name="form_select">
+    <input type="submit" value="Search">
+</form>
+
+<form method="get">
+    {% for city in city_list %}
+        <label for="{{ forcount.loop }}">{{city}}</label>
+        <input type="checkbox" id="{{ forcount.loop }}" 
+        value="{{city}}" name="city_checked" {% if city in city_checked_url %}checked{% endif %}>
+    {% endfor %}
+    <input type="hidden" value="form2" name="form_select">
+    <input type="submit" value="Apply">
+</form>
+
+{% for hotel in hotel_list %}
+    
+    <h4>
+        <a href="{{ hotel.get_absolute_url }}">
+            {{hotel.name}}
+        </a>
+    </h4>
+{% endfor %}
+
+<div>
+{% if request.GET.form_select == "form2" %}
+    <ul>
+      {% for i in hotel_list.paginator.page_range %}
+        <li>
+          <a href="?page={{i}}{{city_checked_url}}&form_select=form2">{{ i }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+{% elif request.GET.form_select == "form1" %}
+    <ul>
+      {% for i in hotel_list.paginator.page_range %}
+        <li>
+          <a href="?page={{i}}&hotel_name={{hotel_name}}&form_select=form1">{{ i }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+{% else %}
+    <ul>
+      {% for i in hotel_list.paginator.page_range %}
+        <li>
+          <a href="?page={{i}}">{{ i }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+{% endif %}
+</div>

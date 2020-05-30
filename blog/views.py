@@ -2,10 +2,18 @@ from datetime import date, timedelta, datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-# from django.views.decorators.http import require_http_methods
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from .models import Hotel, Room, Reserve
 from .forms import HotelDatePickerForm
+
+
+def hotel_detail(request, id):
+    print("HEKKEKEOS")
+    print(type(id), id)
+    hotel = get_object_or_404(Hotel, id=id)
+    return render(request, 'blog/hotel/detail.html', {'hotel': hotel})
 
 
 @login_required
@@ -118,3 +126,80 @@ def reserve_factor(request, tracking_code):
     reserve = get_object_or_404(Reserve, trackingCode=tracking_code)
     return render(request, 'blog/hotel/reserve_factor.html',
                  {'reserve': reserve})
+
+
+"""
+this view has two forms one for searching over hotel names
+and another one for search hotels by their city.
+"""
+@require_http_methods(["GET"])
+def search(request):
+    show_all = False
+    ### these variables will send to template as context
+    hotel_list = []
+    city_checked = []
+    hotel_name = ''
+
+    ### Which form is submitted
+    ## form1 gets hotel's name
+    form_select = request.GET.get('form_select')
+    if form_select == 'form1':
+        hotel_name = request.GET.get('hotel_name')
+        ### check if there is a hotel_name or the form was empty
+        if hotel_name:
+            hotel_list = Hotel.objects.filter(name=hotel_name)
+        else:
+            ## if form is empty show all hotels
+            show_all = True
+
+    ## form2 gets selected citys
+    elif form_select == 'form2':
+        city_checked = request.GET.getlist('city_checked')
+        ### check if there is a checked city or the form was empty
+        if city_checked:
+            ## for every selected cities get their hotels and add them to hotel_list
+            for city in city_checked:
+                for hotel in Hotel.objects.filter(city=city):
+                    hotel_list.append(hotel)
+        else:
+            ## if form is empty show all hotels
+            show_all = True
+
+    else:
+        ## if request is GET and we don't submit any forms then show all hotels
+        show_all = True
+
+    ### show all the hotels
+    if show_all==True:
+        hotel_list = Hotel.objects.all()
+
+    ### pagination hotel_list
+    paginator = Paginator(hotel_list, 3) # 3 posts in each page
+    page = request.GET.get('page')
+    if page == None:
+        page = 1
+
+    try:
+        hotel_list = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        hotel_list = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        hotel_list = paginator.page(paginator.num_pages)
+
+    ### Get all city names
+    all_hotels = Hotel.objects.all()    
+    city_list = []
+    for hotel in all_hotels:
+        city_list.append(hotel.city)
+    city_list = list(dict.fromkeys(city_list))
+
+    ### make url for checked cities
+    city_checked_url = ""
+    for i in city_checked:
+        city_checked_url += "&city_checked=" + i
+
+    return render(request, 'blog/hotel/search.html',
+                {'hotel_list': hotel_list, 'city_list': city_list,
+                 'city_checked_url': city_checked_url, 'hotel_name': hotel_name})
