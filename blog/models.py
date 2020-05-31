@@ -19,16 +19,6 @@ def hotel_directory_path(instance, filename):
         return 'hotel_{0}/{1}'.format(instance.hotel.name, filename)
 
 
-class Account(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=11)
-    national_id = models.CharField(max_length=10)
-    address = models.TextField(max_length=255)
-
-    def __str__(self):
-        return  '{}'.format(self.user.username)
-
-
 class Hotel(models.Model):
     name = models.CharField(max_length=50)
     rating = models.SmallIntegerField()

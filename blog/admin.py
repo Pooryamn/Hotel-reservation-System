@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import Reserve, Account, Hotel, HotelPicture, Room, Score
-
-class AccountAdmin(admin.ModelAdmin):
-    list_display = ['user', 'phone', 'national_id', 'address']
+from .models import Reserve, Hotel, HotelPicture, Room, Score
 
 class ReserveAdmin(admin.ModelAdmin):
     list_display = ['trackingCode', 'beginDate', 'endDate', 'totalPrice', 'status']
@@ -20,7 +17,6 @@ class ScoreAdmin(admin.ModelAdmin):
     list_display = ['user', 'hotel', 'score']
 
 
-admin.site.register(Account, AccountAdmin)
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Reserve, ReserveAdmin)
 admin.site.register(Room, RoomAdmin)
