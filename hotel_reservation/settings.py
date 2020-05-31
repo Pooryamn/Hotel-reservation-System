@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'jalali_date',
+    'AccountApp',
 ]
 
 MIDDLEWARE = [
