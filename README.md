@@ -4,6 +4,8 @@
 
 ```pip install -r requirements.txt```
 
-```python manage.py makemigrations```
+```python manage.py makemigrations AccountApp```
+
+```python manage.py makemigrations blog```
 
 ```python manage.py migrate```
