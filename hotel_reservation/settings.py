@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 ## Email informations:
-from .email_info import EMAIL_HOST,EMAIL_USE_TLS,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD,EMAIL_PORT
+from .Email_info import EMAIL_HOST,EMAIL_USE_TLS,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD,EMAIL_PORT
 
 EMAIL_USE_TLS = EMAIL_USE_TLS
 EMAIL_HOST = EMAIL_HOST
