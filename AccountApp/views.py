@@ -1,5 +1,7 @@
 import random
 import string
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login
@@ -45,11 +47,25 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
 
             # create a password here
-            
+            GeneratedPass = PassGen()
+
             # send password to user email
+            # email body
+            Email_Body = 'Dear ' + user_form.cleaned_data['first_name']
+            Email_Body += ' ' + user_form.cleaned_data['last_name']
+            Email_Body += '\n\nYour Verification Code is '
+            Email_Body += GeneratedPass
 
+            # email subject 
+            Email_Subject = 'Verify your account'
+            
+            # To :
+            Email_reciver = [user_form.cleaned_data['email']]
+
+            # main part of sending :
+            send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=True)
             # open confrim page
-
+            return render(request,'AccountApp/Confrim.html')
             #save user:
             new_user.save()
 
