@@ -1,3 +1,5 @@
+import random
+import string
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login
@@ -42,6 +44,12 @@ def register(request):
             # set password:
             new_user.set_password(user_form.cleaned_data['password'])
 
+            # create a password here
+            
+            # send password to user email
+
+            # open confrim page
+
             #save user:
             new_user.save()
 
@@ -59,3 +67,18 @@ def register(request):
         user_form = UserRegistrationForm()
     
     return render(request,'AccountApp/register.html',{'user_form':user_form})
+
+
+def PassGen():
+    # create a random password 
+    # lenght = 6
+    # lower case , uppercase and numbers
+
+    valid_Chars = string.ascii_lowercase
+    valid_Chars += string.ascii_uppercase
+    valid_Chars += '0123456789'
+
+    for i in range(6):
+        GenPass += random.choice(valid_Chars)
+
+    return GenPass
