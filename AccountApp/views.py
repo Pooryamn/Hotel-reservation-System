@@ -94,6 +94,8 @@ def PassGen():
     valid_Chars += string.ascii_uppercase
     valid_Chars += '0123456789'
 
+    GenPass = ''
+
     for i in range(6):
         GenPass += random.choice(valid_Chars)
 
