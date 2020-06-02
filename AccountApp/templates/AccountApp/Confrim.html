@@ -1,8 +1,15 @@
 
 <h1>Confrim Your Account</h1>
 
-<h3>Check your inbox and write vrification code</h3>
-<input type="text" id="ConfrimPass">
-<br>
-<br>
-<input href="#" type="submit" value="Confrim Code">
+<h2>{{ error }}</h2>
+
+<form action ="{% url 'Confrim_check' %}" method="post">
+
+    <h3>Check your inbox and write vrification code</h3>
+    <input type="text" id="ConfrimPass" name="Confpass">
+    <br>
+    <br>
+    <input type="submit" value="Confrim Code">
+    {% csrf_token %}
+
+</form>
