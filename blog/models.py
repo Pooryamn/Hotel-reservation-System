@@ -28,7 +28,12 @@ class Hotel(models.Model):
     description = models.TextField()
     phone = models.CharField(max_length=11)
     city = models.CharField(max_length=40)
-    rooms = models.IntegerField()
+    
+    ordinary_rooms = models.IntegerField()
+    ordinary_rooms_price = models.FloatField()
+    vip_rooms = models.IntegerField()
+    vip_rooms_price = models.FloatField()
+    
     discount = models.IntegerField()
 
     def __str__(self):
@@ -39,12 +44,18 @@ class Hotel(models.Model):
 
 
 def make_rooms(sender, **kwargs):
-    num_rooms = kwargs['instance'].rooms
-    for i in range(num_rooms):
-        if i >= num_rooms//3:
-            Room.objects.create(hotel=kwargs['instance'], room_type='ordinary', price='2300')
+    ordinary_rooms          = kwargs['instance'].ordinary_rooms
+    ordinary_rooms_price    = kwargs['instance'].ordinary_rooms_price
+    vip_rooms               = kwargs['instance'].vip_rooms
+    vip_rooms_price         = kwargs['instance'].vip_rooms_price
+
+    for i in range(1, ordinary_rooms + vip_rooms + 1):
+        if i<=ordinary_rooms:
+            Room.objects.create(hotel=kwargs['instance'], room_number=i,
+                            room_type='ordinary', price=ordinary_rooms_price)
         else:
-            Room.objects.create(hotel=kwargs['instance'], room_type='vip', price='4600')
+            Room.objects.create(hotel=kwargs['instance'], room_number=i,
+                            room_type='vip', price=vip_rooms_price)
 
 post_save.connect(make_rooms, sender=Hotel)
 
@@ -56,11 +67,12 @@ class Room(models.Model):
     )
 
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    room_number = models.IntegerField()
     room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES, default='ordinary')
     price = models.FloatField()
 
     def __str__(self):
-        return  'Room {}-{}'.format(self.hotel.name, self.id)
+        return  'Room {}-{}'.format(self.hotel.name, self.room_number)
 
 
 class Reserve(models.Model):

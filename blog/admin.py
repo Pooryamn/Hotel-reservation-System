@@ -5,7 +5,7 @@ class ReserveAdmin(admin.ModelAdmin):
     list_display = ['trackingCode', 'beginDate', 'endDate', 'totalPrice', 'status']
 
 class HotelAdmin(admin.ModelAdmin):
-    list_display = ['name', 'city', 'rooms', 'discount', 'phone']
+    list_display = ['name', 'city', 'ordinary_rooms', 'vip_rooms', 'discount', 'phone']
 
 class RoomAdmin(admin.ModelAdmin):
     list_display = ['id', 'hotel', 'room_type', 'price']
