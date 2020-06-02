@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
+from django.db.models.signals import post_save
 import uuid
 
 
@@ -35,6 +36,17 @@ class Hotel(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:hotel_detail', args=[self.id])
+
+
+def make_rooms(sender, **kwargs):
+    num_rooms = kwargs['instance'].rooms
+    for i in range(num_rooms):
+        if i >= num_rooms//3:
+            Room.objects.create(hotel=kwargs['instance'], room_type='ordinary', price='2300')
+        else:
+            Room.objects.create(hotel=kwargs['instance'], room_type='vip', price='4600')
+
+post_save.connect(make_rooms, sender=Hotel)
 
 
 class Room(models.Model):
