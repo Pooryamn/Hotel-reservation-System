@@ -1,17 +1,37 @@
-{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load staticfiles %}
 
-{% block title %}
-    Log-in
-{% endblock %}
 
-{% block content %}
-    
-    <h1>Login</h1>
-    <p>Please, use the following form to log-in:</p>
-    <form action="." method="post">
-    {{ form.as_p }}
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+<div class="login-box">
+  <h1>ورود</h1>
+<form method="post" action=".">
     {% csrf_token %}
-    <p><input type="submit" value="Log-in"></p>
-    </form>
 
-{% endblock %}
+    {{ form.non_field_errors }}
+    
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field form.username placeholder="نام کاربری" %}
+        {{ form.username.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-lock"></i>
+        {% render_field form.password placeholder="رمز عبور" %}
+        {{ form.password.errors }}
+    </div>
+  
+    <input type="submit" class="btn" value="ورود">
+
+</form>
+</div>
+  </body>
+</html>

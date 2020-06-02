@@ -1,18 +1,75 @@
-{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load staticfiles %}
 
-{% block title %}
-    Create an Account
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  </head>
 
-{% block content %}
-    <h1>create an account</h1>
+  <body>
+<div class="signup-box">
+<h1> ثبت نام کاربر </h1>
 
-    <p> please signup useing following form:</p>
+<form method="post" action=".">
+  {% csrf_token %}
 
-    <form action="." method="post">
+  {{ form.non_field_errors }}
 
-        {{ user_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Create my account"></p>
-    </form>
-{% endblock  %}
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.first_name placeholder="نام" %}
+        {{ user_form.first_name.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.last_name placeholder="نام خانوادگی" %}
+        {{ user_form.last_name.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.national_id placeholder="شماره ملی" %}
+        {{ user_form.national_id.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.phone placeholder="شماره موبایل" %}
+        {{ user_form.phone.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.email placeholder="ایمیل" %}
+        {{ user_form.email.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field user_form.username placeholder="نام کاربری" %}
+        {{ user_form.username.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-lock"></i>
+        {% render_field user_form.password placeholder="رمز عبور" %}
+        {{ user_form.password.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-lock"></i>
+        {% render_field user_form.password2 placeholder="وارد کردن دوباره رمز عبور" %}
+        {{ user_form.password2.errors }}
+    </div>
+
+    <input type="submit" class="btn" value="ثبت نام">
+
+</form>
+
+</div>
+</body>
+</html>
