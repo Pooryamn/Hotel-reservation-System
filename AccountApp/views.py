@@ -2,11 +2,14 @@ import random
 import string
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core import serializers
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.auth import authenticate,login
 from .forms import LoginForm,UserRegistrationForm
 from .models import Profile
+
 
 # Create your views here.
 
@@ -37,6 +40,9 @@ def user_login(request):
 
 def register(request):
 
+    global user_form
+    global new_user
+
     if (request.method == 'POST'):
         user_form = UserRegistrationForm(request.POST)
 
@@ -65,20 +71,12 @@ def register(request):
             # main part of sending :
             send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=True)
             # open confrim page
-            return render(request,'AccountApp/Confrim.html')
-            #save user:
-            new_user.save()
-
-            # create a profile :
-            national_id = user_form.cleaned_data['national_id']
-            phone = user_form.cleaned_data['phone']
-
-            Profile.objects.create(user=new_user,phone=phone,national_id=national_id)
-
+            
+            request.session['MainPass'] = GeneratedPass
             
 
-            return render(request,'AccountApp/register_done.html',{'new_user':new_user})
-    
+            return render(request,'AccountApp/Confrim.html')
+            
     else:
         user_form = UserRegistrationForm()
     
@@ -100,3 +98,23 @@ def PassGen():
         GenPass += random.choice(valid_Chars)
 
     return GenPass
+
+def Confrim_check(request):
+    Confrim_Pass = request.POST.get('Confpass')
+    MainPass = request.session.get('MainPass')
+    
+    if Confrim_Pass == MainPass:
+        # create user
+
+        global new_user
+        global user_form
+        new_user.save()
+        national_id = user_form.cleaned_data['national_id']
+        phone = user_form.cleaned_data['phone']
+
+        Profile.objects.create(user=new_user,phone=phone,national_id=national_id)
+
+
+        return render(request,'AccountApp/register_done.html')
+    else :
+        return render(request,'AccountApp/Confrim.html',{'error':'Your confrim pass is wrong !'})
