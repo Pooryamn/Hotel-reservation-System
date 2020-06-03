@@ -1,15 +1,27 @@
+{% load staticfiles %}
 
-<h1>Confrim Your Account</h1>
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+    <div class="login-box">
+        <h1>تایید حساب</h1>
+        <form action ="{% url 'AccountApp:Confrim_check' %}" method="post">
+            {% csrf_token %}
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input type="text" name="Confpass" placeholder="کد تایید">
+            </div>
+            <h4>{{ error }}</h4>
+            <input type="submit" class="btn" value="تایید">
+            
+            <h4>ایمیل خود را چک کنید و کد تایید فرستاده شده را وارد کنید.</h4>
 
-<h2>{{ error }}</h2>
-
-<form action ="{% url 'Confrim_check' %}" method="post">
-
-    <h3>Check your inbox and write vrification code</h3>
-    <input type="text" id="ConfrimPass" name="Confpass">
-    <br>
-    <br>
-    <input type="submit" value="Confrim Code">
-    {% csrf_token %}
-
-</form>
+        </form>
+    </div>
+  </body>
+</html>

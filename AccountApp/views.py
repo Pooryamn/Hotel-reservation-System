@@ -4,9 +4,10 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core import serializers
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.auth import authenticate,login
+from django.urls import reverse
 from .forms import LoginForm,UserRegistrationForm
 from .models import Profile
 
@@ -15,6 +16,7 @@ from .models import Profile
 
 
 def user_login(request):
+    error = ""
     if (request.method == 'POST'):
         form = LoginForm(request.POST)
 
@@ -30,13 +32,14 @@ def user_login(request):
                     return HttpResponse('Authenticated successfully !')
                 
                 else:
-                    return HttpResponse('Disabled account !')
+                    error = "حساب کاربری شما غیر فعال است."
             else:
-                return HttpResponse('Invalid login !')
+                error = "نام کاربری یا رمز عبور اشتباه است."
     else:
         form = LoginForm()
         
-    return render(request,'AccountApp/login.html',{'form':form})
+    return render(request,'AccountApp/login.html',{'form':form, 'error':error})
+
 
 def register(request):
 
@@ -73,7 +76,6 @@ def register(request):
             # open confrim page
             
             request.session['MainPass'] = GeneratedPass
-            
 
             return render(request,'AccountApp/Confrim.html')
             
@@ -114,7 +116,6 @@ def Confrim_check(request):
 
         Profile.objects.create(user=new_user,phone=phone,national_id=national_id)
 
-
-        return render(request,'AccountApp/register_done.html')
+        return HttpResponseRedirect(reverse('AccountApp:login'))
     else :
-        return render(request,'AccountApp/Confrim.html',{'error':'Your confrim pass is wrong !'})
+        return render(request,'AccountApp/Confrim.html',{'error':'کد تایید شما نادرست است.'})
