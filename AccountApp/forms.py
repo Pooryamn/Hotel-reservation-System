@@ -19,6 +19,10 @@ class UserRegistrationForm(forms.ModelForm):
     # confrim password
     password2 = forms.CharField(label='Repeat password',widget=forms.PasswordInput)
 
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
+
     class Meta:
         model = User
 
