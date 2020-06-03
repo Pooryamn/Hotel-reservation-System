@@ -1,0 +1,5 @@
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'seproject982@gmail.com'
+EMAIL_HOST_PASSWORD = 'H0tel13990312'
+EMAIL_PORT = 587

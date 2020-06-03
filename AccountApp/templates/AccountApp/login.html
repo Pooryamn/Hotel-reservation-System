@@ -1,0 +1,37 @@
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+<div class="login-box">
+  <h1>ورود</h1>
+<form method="post" action=".">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+    
+    <div class="textbox">
+        <i class="fas fa-user"></i>
+        {% render_field form.username placeholder="نام کاربری" %}
+        {{ form.username.errors }}
+    </div>
+
+    <div class="textbox">
+        <i class="fas fa-lock"></i>
+        {% render_field form.password placeholder="رمز عبور" %}
+        {{ form.password.errors }}
+    </div>
+    <input type="submit" class="btn" value="ورود">
+    <h3>{{ error }}</h3>
+
+</form>
+</div>
+  </body>
+</html>
