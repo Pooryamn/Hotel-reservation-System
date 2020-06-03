@@ -10,8 +10,6 @@ from .forms import HotelDatePickerForm
 
 
 def hotel_detail(request, id):
-    print("HEKKEKEOS")
-    print(type(id), id)
     hotel = get_object_or_404(Hotel, id=id)
     return render(request, 'blog/hotel/detail.html', {'hotel': hotel})
 
