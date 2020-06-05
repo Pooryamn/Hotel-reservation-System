@@ -29,7 +29,7 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
 
-                    return HttpResponse('Authenticated successfully !')
+                    return HttpResponseRedirect(reverse('blog:home'))
                 
                 else:
                     error = "حساب کاربری شما غیر فعال است."

@@ -6,7 +6,7 @@
 <html lang="en" dir="rtl">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ورود</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
   </head>
   <body>
@@ -32,6 +32,7 @@
     <h3>{{ error }}</h3>
 
 </form>
+<p>حساب کاربری ندارید؟ <a style="color:white;" href="{% url 'AccountApp:register' %}">ثبت نام</a></p>
 </div>
   </body>
 </html>

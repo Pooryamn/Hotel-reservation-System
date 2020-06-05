@@ -1,13 +1,33 @@
-<h2>Complete</h2>
-
 {% load jalali_tags%}
 
-{{reserve.user.username}}<br>
-{{reserve.trackingCode}}<br>
-{{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br>
-{{reserve.endDate|to_jalali:'%y-%m-%d'}}<br>
-{{reserve.totalPrice}}<br>
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>فاکتور رزرو</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+    <!-- <link rel="stylesheet" href="{% static 'css/search.css' %}" type="text/css"> -->
+</head>
+<body>
+{% include "header.html" %}
+<br><br><br>
+<div style="color: white;">
+<h2>رزرو با موفقیت انجام شد</h2>
+    
+
+کاربر:‌ {{reserve.user.username}}<br>
+کد پیگیری:‌ {{reserve.trackingCode}}<br>
+تاریخ ورود:‌ {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br>
+تاریخ خروج:‌ {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br>
+مجموع قیمت: {{reserve.totalPrice}}<br>
 {% for room in reserve.room.all%}
-    {{room}}<br>
+اتاق:
+    {{room.room_number}}<br>
 
 {% endfor %}
+</div>
+</body>
+</html>

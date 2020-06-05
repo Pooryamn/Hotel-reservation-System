@@ -1,29 +1,37 @@
-<h1>Hello</h1>
+{% load staticfiles %}
 
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>رزرو</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+
+</head>
+<body onload="myFunction()">
+{% include "header.html" %}
+<br><br><br>
+<h2>رزرو اتاق برای هتل {{hotel.name}}</h2>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<!-- <form action="" method="post">
-{% csrf_token %}
-    <input type="text" name="begin">
-    <input type="text" name="end">
-    <input type="submit" value="Vote">
-</form>
- -->
-
-
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_table }}
     <input type="hidden" value="form1" name="form_select">
-    <input type="submit" value="Search">
+    <input type="submit" value="جست و جو">
 </form>
 
 {{form.media}}
 
-
+<p>لیست اتاق ها: </p>
 <form method="post">{% csrf_token %}
   <ul class="ks-cboxtags">
     {% for i in rooms %}
-    <li><input type="checkbox" id="{{ i.id }}" value="{{ i.id }}" name="selected_rooms"><label for="{{ i.id }}">اتاق {{i.id}}</label></li>
+    <li>
+        <input type="checkbox" onclick="myFunction()" id="{{ i.id }}" data-price="{{i.price}}" value="{{ i.id }}" name="selected_rooms">
+        <label for="{{ i.id }}">اتاق {{i.room_number}}</label>
+        <!-- <input type="hidden" name="checkbox_price" value="{{i.price}}"> -->
+    </li>
     {% endfor %}
   </ul>
 
@@ -31,39 +39,29 @@
   <input type="hidden" value="{{ end|date:'Y-m-d' }}" name="end">
   <input type="hidden" value="{{ hotel.id }}" name="hotel_id">
   <input type="hidden" value="form2" name="form_select">
-
-  <input type="submit" value="Reserve">
+  <p>مبلغ کل: <span id="total_cost"></span></p>
+  <input type="submit" value="پرداخت">
 </form>
 
 </div>
 
+<script type="text/javascript">
+    function myFunction(){
+        let total = 0;
+        let list = document.getElementsByName("selected_rooms");
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if(list[i].checked){
+                total = total + parseInt(list[i].getAttribute("data-price"))
+            }
+        }
+        document.getElementById("total_cost").innerHTML = total;
+    }
+
+</script>
+
+
 <style>
-body,
-html {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: #FFEFBA;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFFFFF, #FFEFBA);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-}
-
-.container {
-    max-width: 640px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 13px;
-}
-
 ul.ks-cboxtags {
     list-style: none;
     padding: 20px;
@@ -131,3 +129,6 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   border: 2px solid #e9a1ff;
 }
 </style>
+
+</body>
+</html>

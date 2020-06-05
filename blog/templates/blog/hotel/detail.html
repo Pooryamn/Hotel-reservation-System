@@ -1,10 +1,27 @@
-<h2>{{hotel.name}}</h2>
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>جست و جو</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+
+</head>
+<body>
+{% include "header.html" %}
+<br><br><br>
+<h2>هتل {{hotel.name}}</h2>
 
 <p>
-    {{hotel.name}}<br/>
-    {{hotel.rating}}<br/>
-    {{hotel.phone}}<br/>
-    {{hotel.city}}<br/>
-    {{hotel.discount}}<br/>
-    {{hotel.address}}<br/>
+    درجه هتل : {{hotel.rating}}<br/>
+    تلفن تماس: {{hotel.phone}}<br/>
+    شهر: {{hotel.city}}<br/>
+    آدرس: {{hotel.address}}<br/>
 </p>
+
+<a href="{% url 'blog:hotel_reserve' hotel.id %}"><input type="button" value="رزرو"></a>
+
+</body>
+</html>

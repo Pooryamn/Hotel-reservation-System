@@ -9,6 +9,13 @@ from .models import Hotel, Room, Reserve
 from .forms import HotelDatePickerForm
 
 
+
+def home_page(request):
+    hotel_suggestions = Hotel.objects.filter(rating__gt=3).order_by('-rating')
+    hotel_suggestions = hotel_suggestions[:3]
+    return render(request, 'blog/hotel/home.html', {'hotel_suggestions': hotel_suggestions})
+
+
 def hotel_detail(request, id):
     hotel = get_object_or_404(Hotel, id=id)
     return render(request, 'blog/hotel/detail.html', {'hotel': hotel})
@@ -25,9 +32,9 @@ def hotel_reserve(request, id):
                 begin = form.cleaned_data.get('begin')
                 end = form.cleaned_data.get('end')
             else:
-                begin = ''
-                end = ''
-                error_message = 1
+                begin = date.today()
+                end = date.today() + timedelta(days=3)
+                error_message = ''
         ### if request came from form2
         elif request.POST['form_select'] == 'form2':
             reserve, begin, end, error_message = make_reserve(request)
@@ -44,7 +51,7 @@ def hotel_reserve(request, id):
     hotel = get_object_or_404(Hotel, id=id)
     ### if error is from form1 do not show available rooms
     avl_rooms = []
-    if error_message != 1:
+    if error_message != '':
         room_list = Room.objects.filter(hotel__id=id)
         avl_rooms = check_room(room_list, begin, end)
 
@@ -78,10 +85,11 @@ def make_reserve(request):
     begin = request.POST['begin']
     end = request.POST['end']
     begin_test = begin.split('-')
-    end_test = end.split('-')
     begin = datetime(int(begin_test[0]), int(begin_test[1]), int(begin_test[2]))
+    end_test = end.split('-')
     end = datetime(int(end_test[0]), int(end_test[1]), int(end_test[2]))
-    
+
+
     if selected_rooms:
         room_list = Room.objects.filter(hotel__id=hotel_id)
         avl_rooms = check_room(room_list, begin, end)

@@ -5,8 +5,8 @@ from jalali_date.widgets import AdminJalaliDateWidget
 
 
 class HotelDatePickerForm(forms.Form):
-    begin = JalaliDateField(label=('date'), widget=AdminJalaliDateWidget)
-    end = JalaliDateField(label=('date'), widget=AdminJalaliDateWidget)
+    begin = JalaliDateField(label=('تاریخ ورود:'), widget=AdminJalaliDateWidget)
+    end = JalaliDateField(label=('تاریخ خروج'), widget=AdminJalaliDateWidget)
 
     def clean(self):
         cleaned_data = super(HotelDatePickerForm, self).clean()
