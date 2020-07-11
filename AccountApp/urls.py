@@ -6,4 +6,5 @@ urlpatterns = [
     url('login/',views.user_login,name='login'),
     url('register/',views.register,name='register'),
     url('confrim/',views.Confrim_check,name='Confrim_check'),
+    url('profile/',views.profile,name='profile'),
 ]
