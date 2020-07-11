@@ -1,0 +1,34 @@
+{% load jalali_tags%}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>تاریخچه رزرو ها</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+</head>
+<body>
+{% include "header.html" %}
+
+<br><br><br>
+<table style="width:100%; color:white;">
+  <tr>
+    <th>تاریخ ورود</th>
+    <th>تاریخ خروج</th>
+    <th>قیمت نهایی</th>
+    <th>تاریخ رزرو</th>
+    <th>کد پیگیری</th>
+    <th>اتاق ها</th>
+  </tr>
+  {% for reserve in reserve_list %}
+      <tr>
+        <td>{{reserve.beginDate|to_jalali:'%y-%m-%d'}}</td>
+        <td>{{reserve.endDate|to_jalali:'%y-%m-%d'}}</td>
+        <td>{{reserve.totalPrice}}</td>
+        <td>{{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}</td>
+        <td>{{reserve.trackingCode}}</td>
+        <td>{% for room in reserve.room.all %}-{{room.room_number}}{% endfor %}</td>
+      </tr>
+  {% endfor %}
+</table>

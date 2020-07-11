@@ -8,7 +8,7 @@ class HotelAdmin(admin.ModelAdmin):
     list_display = ['name', 'city', 'ordinary_rooms', 'vip_rooms', 'discount', 'rating', 'phone']
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ['id', 'hotel', 'room_type', 'price']
+    list_display = ['id', 'hotel', 'room_number', 'room_type', 'price']
 
 class HotelPictureAdmin(admin.ModelAdmin):
     list_display = ['id', 'hotel']

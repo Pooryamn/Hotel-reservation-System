@@ -227,3 +227,16 @@ def search(request):
                 {'hotel_list': hotel_list, 'city_list': city_list,
                  'city_checked_url': city_checked_url,
                  'ranking_checked_url': ranking_checked_url, 'hotel_name': hotel_name})
+
+
+"""
+In this view user can see his/her profile information and 
+reservation history.
+"""
+@require_http_methods(["GET"])
+def reservation_history(request):
+    user = request.user
+    reserve_list = Reserve.objects.filter(user=user)
+
+    return render(request, 'blog/hotel/reservation_history.html',
+                 {'reserve_list': reserve_list, 'user':user})
