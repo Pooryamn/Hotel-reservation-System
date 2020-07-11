@@ -1,14 +1,16 @@
 import random
 import string
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
-from django.core.mail import send_mail
-from django.core import serializers
-from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.sessions.middleware import SessionMiddleware
+from django.core import serializers
+from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
-from .forms import LoginForm,UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, ChangeProfileInfoForm, ChangePasswordForm
 from .models import Profile
 
 
@@ -119,3 +121,58 @@ def Confrim_check(request):
         return HttpResponseRedirect(reverse('AccountApp:login'))
     else :
         return render(request,'AccountApp/Confrim.html',{'error':'کد تایید شما نادرست است.'})
+
+
+@login_required
+def profile(request):
+    
+    flag = 0
+    user = request.user
+    profile = get_object_or_404(Profile, user=user)
+
+    if request.method == 'POST':
+        ### if request came from form1
+        if request.POST['form_select'] == 'form1':
+            flag = 1
+            ### send original username and email for validation in form
+            info_form = ChangeProfileInfoForm(request.POST,
+                                              username=user.username,
+                                              email=user.email)
+            if info_form.is_valid():
+
+                user.username = info_form.cleaned_data['username']
+                user.first_name = info_form.cleaned_data['first_name']
+                user.last_name = info_form.cleaned_data['last_name']
+                user.email = info_form.cleaned_data['email']
+                profile.national_id = info_form.cleaned_data['national_id']
+                profile.phone = info_form.cleaned_data['phone']
+
+                user.save()
+                profile.save()
+
+        ### if request came from form2
+        elif request.POST['form_select'] == 'form2':
+            flag = 2
+            pass_form = ChangePasswordForm(request.POST)
+            if pass_form.is_valid():
+                password = pass_form.cleaned_data["password"]
+                user.set_password(password)
+                user.save()
+
+    if flag == 0 or flag == 2:
+        profile_initial = {'username': user.username,
+                           'first_name':user.first_name,
+                           'last_name':user.last_name,
+                           'email':user.email,
+                           'national_id':profile.national_id,
+                           'phone':profile.phone}
+        info_form = ChangeProfileInfoForm(initial=profile_initial)
+    
+    if flag == 0 or flag == 1:
+        pass_form = ChangePasswordForm()
+
+    return render(request, 'AccountApp/profile.html', {
+            'profile': profile,
+            'info_form': info_form,
+            'pass_form': pass_form,
+        })

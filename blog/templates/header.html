@@ -10,7 +10,11 @@
                 <li><a href="{%url 'blog:home'%}">خانه</a></li>
                 <li><a href="{%url 'blog:search'%}">جست و جو</a></li>
                 <li> <a href="#">پیگیری رزرو</a></li>
-                <li><a href="{%url 'AccountApp:login'%}">ورود/ثبت نام</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{%url 'AccountApp:profile'%}">{{request.user}}</a></li>
+                {% else %}
+                    <li><a href="{%url 'AccountApp:login'%}">ورود/ثبت نام</a></li>
+                {% endif %}
             </ul>
         </nav>
 

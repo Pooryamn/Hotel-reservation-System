@@ -1,0 +1,43 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>صفحه کاربری</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+
+</head>
+<body>
+{% include "header.html" %}
+<br><br><br>
+
+<div style="color:white;">
+<h3>اطلاعات حساب کاربری:</h3>
+نام کاربری: {{profile.user.username}}<br>
+نام: {{profile.user.first_name}}<br>
+نام خانوادگی: {{profile.user.last_name}}<br>
+ایمیل: {{profile.user.email}}<br>
+شماره موبایل: {{profile.phone}}<br>
+کد ملی: {{profile.national_id}}<br>
+</div>
+
+<div style="color:white;">
+<h3>تغییر اطلاعات حساب کاربری:</h3>
+<form method="post">
+    {% csrf_token %}
+    {{info_form.as_p}}
+    <input type="hidden" value="form1" name="form_select">
+    <input type="submit" value="ثبت تغییرات">
+</form>
+</div>
+
+<div style="color:white;">
+<h3>تغییر رمز عبور:</h3>
+<form method="post">
+    {% csrf_token %}
+    {{pass_form.as_p}}
+    <input type="hidden" value="form2" name="form_select">
+    <input type="submit" value="ثبت تغییرات">
+</form>
+</div>
