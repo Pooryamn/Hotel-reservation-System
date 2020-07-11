@@ -144,6 +144,7 @@ def search(request):
     ### these variables will send to template as context
     hotel_list = []
     city_checked = []
+    ranking_checked = []
     hotel_name = ''
 
     ### Which form is submitted
@@ -158,18 +159,30 @@ def search(request):
             ## if form is empty show all hotels
             show_all = True
 
-    ## form2 gets selected citys
+    ## form2 gets selected citys and rankings
     elif form_select == 'form2':
         city_checked = request.GET.getlist('city_checked')
+        ranking_checked = request.GET.getlist('ranking_checked')
         ### check if there is a checked city or the form was empty
         if city_checked:
-            ## for every selected cities get their hotels and add them to hotel_list
-            for city in city_checked:
-                for hotel in Hotel.objects.filter(city=city):
-                    hotel_list.append(hotel)
+            ### check if there is a checked ranking or not
+            if not ranking_checked:
+                ## for every selected cities get their hotels and add them to hotel_list
+                for city in city_checked:
+                    for hotel in Hotel.objects.filter(city=city):
+                        hotel_list.append(hotel)
+        
+            else:
+                ## for every selected cities get their hotels and add them to hotel_list
+                for city in city_checked:
+                    for hotel in Hotel.objects.filter(city=city, rating__in=ranking_checked):
+                        hotel_list.append(hotel)
         else:
-            ## if form is empty show all hotels
-            show_all = True
+            ## if no city was selected show all hotels based on ranking
+            if ranking_checked:
+                hotel_list = Hotel.objects.filter(rating__in=ranking_checked)
+            else:
+                show_all = True
 
     else:
         ## if request is GET and we don't submit any forms then show all hotels
@@ -206,6 +219,11 @@ def search(request):
     for i in city_checked:
         city_checked_url += "&city_checked=" + i
 
+    ranking_checked_url = ""
+    for i in ranking_checked:
+        ranking_checked_url += "&ranking_checked=" + i
+
     return render(request, 'blog/hotel/search.html',
                 {'hotel_list': hotel_list, 'city_list': city_list,
-                 'city_checked_url': city_checked_url, 'hotel_name': hotel_name})
+                 'city_checked_url': city_checked_url,
+                 'ranking_checked_url': ranking_checked_url, 'hotel_name': hotel_name})

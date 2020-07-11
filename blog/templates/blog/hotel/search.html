@@ -49,6 +49,28 @@
         value="{{city}}" name="city_checked" {% if city in city_checked_url %}checked{% endif %}>
         <label for="{{ forcount.loop }}">{{city}}</label></span>
     {% endfor %}
+    
+    <br />
+    <span dir="ltr"><input type="checkbox" id="rank1" 
+    value="1" name="ranking_checked" {% if '1' in ranking_checked_url %}checked{% endif %}>
+    <label for="rank1">1</label></span>
+    
+    <span dir="ltr"><input type="checkbox" id="rank2" 
+    value="2" name="ranking_checked" {% if '2' in ranking_checked_url %}checked{% endif %}>
+    <label for="rank2">2</label></span>
+    
+    <span dir="ltr"><input type="checkbox" id="rank3" 
+    value="3" name="ranking_checked" {% if '3' in ranking_checked_url %}checked{% endif %}>
+    <label for="rank3">3</label></span>
+    
+    <span dir="ltr"><input type="checkbox" id="rank4" 
+    value="4" name="ranking_checked" {% if '4' in ranking_checked_url %}checked{% endif %}>
+    <label for="rank4">4</label></span>
+    
+    <span dir="ltr"><input type="checkbox" id="rank5" 
+    value="5" name="ranking_checked" {% if '5' in ranking_checked_url %}checked{% endif %}>
+    <label for="rank5">5</label></span>
+    
     <input type="hidden" value="form2" name="form_select">
     <input type="submit" value="اعمال فیلتر">
 </form>
@@ -66,7 +88,7 @@
 <div class="pagination">
 {% if request.GET.form_select == "form2" %}
       {% for i in hotel_list.paginator.page_range %}
-          <a href="?page={{i}}{{city_checked_url}}&form_select=form2">{{ i }}</a>
+          <a href="?page={{i}}{{ranking_checked_url}}{{city_checked_url}}&form_select=form2">{{ i }}</a>
       {% endfor %}
 {% elif request.GET.form_select == "form1" %}
       {% for i in hotel_list.paginator.page_range %}
