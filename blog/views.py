@@ -2,11 +2,14 @@ from datetime import date, timedelta, datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from jalali_date import datetime2jalali, date2jalali
 from .models import Hotel, Room, Reserve
-from .forms import HotelDatePickerForm
+from .forms import HotelDatePickerForm, ReservationTrackingForm
 
 
 
@@ -253,3 +256,60 @@ def reservation_history(request):
 
     return render(request, 'blog/hotel/reservation_history.html',
                  {'reserve_list': reserve_list, 'user':user})
+
+
+@require_http_methods(["GET", "POST"])
+def reservation_tracking(request):
+    reserve = None
+    error_message = None
+    if request.method == "POST":
+        form = ReservationTrackingForm(request.POST)
+        if form.is_valid():
+            tracking_code = form.cleaned_data.get('tracking_code')
+            phone = form.cleaned_data.get('phone')
+            reserve = Reserve.objects.filter(trackingCode=tracking_code,
+                                             user__profile__phone=phone).first()
+            if not reserve:
+                error_message = "رزروی با این مشخصات پیدا نشد."
+            else:
+                # send password to user email
+                send_factor_email(reserve)
+    else:
+        form = ReservationTrackingForm()
+
+    return render(request, 'blog/hotel/reservation_tracking.html',
+                 {'form': form,
+                  'reserve': reserve,
+                  'error_message': error_message})
+
+
+def send_factor_email(reserve):
+    # email body
+    Email_Body = "هتل آنلاین\n\n"
+    Email_Body += "آقا/خانم: " + reserve.user.first_name
+    Email_Body += ' ' + reserve.user.first_name
+    Email_Body += '\n\nاطلاعات رزرو شما به شرح زیر است: '
+    Email_Body += '\nهتل: ' + reserve.room.first().hotel.name
+    Email_Body += '\nتاریخ شروع اقامت: ' + date2jalali(reserve.beginDate).strftime('%y/%m/%d')
+    Email_Body += '\nتاریخ اتمام اقامت: ' + date2jalali(reserve.endDate).strftime('%y/%m/%d')
+    Email_Body += '\nمجموع قیمت پرداختی: ' + str(reserve.totalPrice)
+    Email_Body += '\nتاریخ رزرو: ' + datetime2jalali(reserve.created).strftime('%y/%m/%d ساعت: %H:%M:%S')
+
+    rooms = []
+    for room in reserve.room.all():
+        rooms.append(str(room.room_number))
+
+    Email_Body += '\nاتاق های: ' + ' - '.join(rooms)
+    
+    # rooms = reserve.room.all()
+    # rooms = list(rooms)
+
+
+    # email subject 
+    Email_Subject = 'هتل آنلاین - اطلاعات رزرو'
+
+    # To :
+    Email_reciver = [reserve.user.email]
+
+    # main part of sending :
+    send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=False)

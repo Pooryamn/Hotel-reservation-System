@@ -15,3 +15,16 @@ class HotelDatePickerForm(forms.Form):
         # Check if begin date is greater than today date
         if begin < date.today() or begin >= end:
             raise forms.ValidationError('تاریخ ها نامعتبر است.')
+
+
+class ReservationTrackingForm(forms.Form):
+    tracking_code = forms.CharField(max_length=10, label="کد پیگیری")
+    phone = forms.CharField(max_length=11, label='شماره تلفن همراه')
+    
+    # def clean(self):
+    #     cleaned_data = super(HotelDatePickerForm, self).clean()
+    #     begin = cleaned_data.get('begin')
+    #     end = cleaned_data.get('end')
+    #     # Check if begin date is greater than today date
+    #     if begin < date.today() or begin >= end:
+    #         raise forms.ValidationError('تاریخ ها نامعتبر است.')

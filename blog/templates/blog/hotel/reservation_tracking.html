@@ -1,0 +1,45 @@
+{% load jalali_tags%}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>پیگیری رزرو</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+
+</head>
+<body style="color: white;">
+{% include "header.html" %}
+<br><br>
+<h2>
+    پیگیری رزرو
+</h2>
+<hr>
+<br>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_table}}
+    <input type="submit" value="جست و جو">
+</form>
+
+{% if error_message %}<p><h3>{{ error_message }}</h3></p>{% endif %}
+
+{% if reserve %}
+<div>
+    <p>
+        نام کاربری: {{reserve.user.username}}<br />
+        هتل: {{reserve.room.first.hotel}}<br />
+        تاریخ شروع اقامت: {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br />
+        تاریخ اتمام اقامت: {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br />
+        مجموع قیمت پرداختی:{{reserve.totalPrice}}<br />
+        تاریخ رزرو: {{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}<br />
+        اتاق های: {% for room in reserve.room.all %}-{{room.room_number}}{% endfor %}<br />
+    </p>
+</div>
+{% endif %}
+
+
+</body>
+</html>
