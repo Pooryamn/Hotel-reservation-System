@@ -33,17 +33,20 @@
       }
     </style>
 </head>
-<body>
+<body style="color: white;">
 {% include "header.html" %}
 
 <br><br><br>
+<h2>جست و جوی هتل ها:</h2>
 <form method="get">
     <input type="text" {%if hotel_name%}value={{hotel_name}}{%endif%} name="hotel_name">
     <input type="hidden" value="form1" name="form_select">
     <input type="submit" value="جست و جو">
 </form>
 
+<h3>فیلتر نتایج:</h3>
 <form method="get">
+    <h4>شهر:</h4>
     {% for city in city_list %}
         <span dir="ltr"><input type="checkbox" id="{{ forcount.loop }}" 
         value="{{city}}" name="city_checked" {% if city in city_checked_url %}checked{% endif %}>
@@ -51,6 +54,7 @@
     {% endfor %}
     
     <br />
+    <h4>درجه هتل:</h4>
     <span dir="ltr"><input type="checkbox" id="rank1" 
     value="1" name="ranking_checked" {% if '1' in ranking_checked_url %}checked{% endif %}>
     <label for="rank1">1</label></span>
@@ -71,10 +75,12 @@
     value="5" name="ranking_checked" {% if '5' in ranking_checked_url %}checked{% endif %}>
     <label for="rank5">5</label></span>
     
+    <br />
     <input type="hidden" value="form2" name="form_select">
     <input type="submit" value="اعمال فیلتر">
 </form>
 
+<hr>
 <h2><p>لیست هتل ها:</p></h2>
 {% for hotel in hotel_list %}
     

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
 
 </head>
-<body onload="myFunction()">
+<body style="color: white;" onload="myFunction()">
 {% include "header.html" %}
 <br><br><br>
 <h2>رزرو اتاق برای هتل {{hotel.name}}</h2>
@@ -23,15 +23,31 @@
 
 {{form.media}}
 
-<p>لیست اتاق ها: </p>
+<h4><p>لیست اتاق ها: </p></h4>
 <form method="post">{% csrf_token %}
+  <h5>اتاق های معمولی:</h5>
   <ul class="ks-cboxtags">
     {% for i in rooms %}
+    {% if i.room_type == 'ordinary' %}
     <li>
         <input type="checkbox" onclick="myFunction()" id="{{ i.id }}" data-price="{{i.price}}" value="{{ i.id }}" name="selected_rooms">
         <label for="{{ i.id }}">اتاق {{i.room_number}}</label>
         <!-- <input type="hidden" name="checkbox_price" value="{{i.price}}"> -->
     </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+  <h5>اتاق های vip:</h5>
+  <ul class="ks-cboxtags">
+    {% for i in rooms %}
+    {% if i.room_type == 'vip' %}
+    <li>
+        <input type="checkbox" onclick="myFunction()" id="{{ i.id }}" data-price="{{i.price}}" value="{{ i.id }}" name="selected_rooms">
+        <label for="{{ i.id }}">اتاق {{i.room_number}}</label>
+        <!-- <input type="hidden" name="checkbox_price" value="{{i.price}}"> -->
+    </li>
+    {% endif %}
     {% endfor %}
   </ul>
 
