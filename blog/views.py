@@ -312,4 +312,4 @@ def send_factor_email(reserve):
     Email_reciver = [reserve.user.email]
 
     # main part of sending :
-    send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=False)
+    send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=True)

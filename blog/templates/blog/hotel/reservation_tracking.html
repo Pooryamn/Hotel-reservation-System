@@ -29,6 +29,10 @@
 {% if reserve %}
 <div>
     <p>
+        اطلاعات به ایمیل شما ارسال شد.
+    </p>
+
+    <p>
         نام کاربری: {{reserve.user.username}}<br />
         هتل: {{reserve.room.first.hotel}}<br />
         تاریخ شروع اقامت: {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br />
@@ -39,7 +43,6 @@
     </p>
 </div>
 {% endif %}
-
 
 </body>
 </html>
