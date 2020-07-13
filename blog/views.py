@@ -287,7 +287,7 @@ def send_factor_email(reserve):
     # email body
     Email_Body = "هتل آنلاین\n\n"
     Email_Body += "آقا/خانم: " + reserve.user.first_name
-    Email_Body += ' ' + reserve.user.first_name
+    Email_Body += ' ' + reserve.user.last_name
     Email_Body += '\n\nاطلاعات رزرو شما به شرح زیر است: '
     Email_Body += '\nهتل: ' + reserve.room.first().hotel.name
     Email_Body += '\nتاریخ شروع اقامت: ' + date2jalali(reserve.beginDate).strftime('%y/%m/%d')
@@ -300,10 +300,6 @@ def send_factor_email(reserve):
         rooms.append(str(room.room_number))
 
     Email_Body += '\nاتاق های: ' + ' - '.join(rooms)
-    
-    # rooms = reserve.room.all()
-    # rooms = list(rooms)
-
 
     # email subject 
     Email_Subject = 'هتل آنلاین - اطلاعات رزرو'
