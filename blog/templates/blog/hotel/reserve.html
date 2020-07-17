@@ -11,7 +11,9 @@
 </head>
 <body style="color: white;" onload="myFunction()">
 {% include "header.html" %}
-<br><br><br>
+<br><br>
+
+<div class="black-box">
 <h2>رزرو اتاق برای هتل {{hotel.name}}</h2>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -23,10 +25,10 @@
 
 {{form.media}}
 
-<h4><p>لیست اتاق ها: </p></h4>
+<h4>لیست اتاق ها: </h4>
 <form method="post">{% csrf_token %}
-  <h5>اتاق های معمولی:</h5>
   <ul class="ks-cboxtags">
+  <h5>اتاق های معمولی:</h5>
     {% for i in rooms %}
     {% if i.room_type == 'ordinary' %}
     <li>
@@ -38,8 +40,8 @@
     {% endfor %}
   </ul>
 
-  <h5>اتاق های vip:</h5>
   <ul class="ks-cboxtags">
+  <h5>اتاق های vip:</h5>
     {% for i in rooms %}
     {% if i.room_type == 'vip' %}
     <li>
@@ -55,7 +57,7 @@
   <input type="hidden" value="{{ end|date:'Y-m-d' }}" name="end">
   <input type="hidden" value="{{ hotel.id }}" name="hotel_id">
   <input type="hidden" value="form2" name="form_select">
-  <p>مبلغ کل: <span id="total_cost"></span></p>
+  <p>مبلغ برای یک شب اقامت: <span id="total_cost"></span></p>
   <input type="submit" value="پرداخت">
 </form>
 
@@ -78,6 +80,22 @@
 
 
 <style>
+
+.black-box{
+    font-family: Yekan;
+    direction: rtl;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 3px;
+
+    float: right;
+    width:97%;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding:10px;
+    margin-bottom: 5px;
+}
+
 ul.ks-cboxtags {
     list-style: none;
     padding: 20px;
@@ -89,7 +107,7 @@ ul.ks-cboxtags li label{
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);
     border: 2px solid rgba(139, 139, 139, .3);
-    color: #adadad;
+    color: black;
     border-radius: 25px;
     white-space: nowrap;
     margin: 3px 0px;

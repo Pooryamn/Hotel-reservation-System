@@ -31,19 +31,36 @@
         background-color: green;
         border-radius: 5px;
       }
+      .black-box{
+        font-family: Yekan;
+        direction: rtl;
+        color: white;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 3px;
+
+        float: right;
+        width:97%;
+        margin-right: 10px;
+        margin-left: 10px;
+        padding:10px;
+        margin-bottom: 5px;
+      }
     </style>
 </head>
 <body style="color: white;">
 {% include "header.html" %}
 
-<br><br><br>
+<br><br>
+
+<div class="black-box">
+
 <h2>جست و جوی هتل ها:</h2>
 <form method="get">
-    <input type="text" {%if hotel_name%}value={{hotel_name}}{%endif%} name="hotel_name">
+    <input type="text" {%if hotel_name%}value={{hotel_name}}{%endif%} placeholder="نام هتل مورد نظر را وارد کنید" name="hotel_name">
     <input type="hidden" value="form1" name="form_select">
     <input type="submit" value="جست و جو">
 </form>
-
+<hr>
 <h3>فیلتر نتایج:</h3>
 <form method="get">
     <h4>شهر:</h4>
@@ -74,13 +91,16 @@
     <span dir="ltr"><input type="checkbox" id="rank5" 
     value="5" name="ranking_checked" {% if '5' in ranking_checked_url %}checked{% endif %}>
     <label for="rank5">5</label></span>
-    
+
+    <br />
     <br />
     <input type="hidden" value="form2" name="form_select">
     <input type="submit" value="اعمال فیلتر">
 </form>
+<!-- </div> -->
 
 <hr>
+<!-- <div class="black-box"> -->
 <h2><p>لیست هتل ها:</p></h2>
 {% for hotel in hotel_list %}
     
@@ -105,6 +125,8 @@
           <a href="?page={{i}}">{{ i }}</a>
       {% endfor %}
 {% endif %}
+</div>
+
 </div>
 </body>
 </html>

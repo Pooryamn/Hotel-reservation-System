@@ -55,7 +55,7 @@ a:hover{
 
 #header nav{
     float: right;
-    font-family: BYekan;
+    font-family: Yekan;
     direction: rtl;
 }
 #header nav ul {
@@ -88,15 +88,26 @@ a:hover{
     border: 1px solid #6EA4C7;
     color: #fff;
 }
+
 .body p{
+    font-family: Yekan;
+    text-align: center;
+    font-size: 20px;
+    color: #000000;
+     /*background-color: rgba(76,175,80,0.6);*/
+     /*border: #4caf50 solid; */
+    margin-bottom: 20px:;
+}
+
+/*.body p{
     text-align: center;
     font-size: 20px;
     color: rgb(255, 255, 255);
     background-color: rgba(76,175,80,0.6);
     border: #4caf50 solid;
    margin-bottom: 20px:;
-}
-.article{
+}*/
+/*.article{
     font-family: BYekan;
     direction: rtl;
     color: #000000;
@@ -107,37 +118,57 @@ a:hover{
     width: 50%;
     margin-right: 10px;
     padding:5px;
+}*/
+
+.article{
+    font-family: Yekan;
+    direction: rtl;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 3px;
+
+    float: right;
+    width:65%;
+    margin-right: 10px;
+    padding:5px;
+    margin-bottom: 5px;
 }
+
 
 .clear{
     clear:both;
 }
+/*.suggest{
+    float: left;
+    width: 30%;
+}*/
+
 .suggest{
     float: left;
     width: 30%;
+    background-color:rgba(76,175,80,0.2);
+    margin-left: 0px;
+    padding-right: 10px;
+    border-radius: 3px;
 
 }
+
 .suggest .sugg1{
+    /* border: 1px solid rgb(76,175,80); */
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    background-color: aliceblue;
+}
+
+
+/*.suggest .sugg1{
     border: 1px solid rgb(76,175,80);
     border-top-right-radius: 20px;
     margin-bottom: 10px;
     margin-left: 10px;
     background-color: aliceblue;
-}
-.suggest .sugg2{
-    border: 1px solid rgb(76,175,80);
-    border-top-right-radius: 20px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    background-color: aliceblue;
-}
-.suggest .sugg3{
-    border: 1px solid rgb(76,175,80);
-    border-top-right-radius: 20px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    background-color: aliceblue;
-}
+}*/
 /* Footer */
 .row3 footer{
     text-align: center;

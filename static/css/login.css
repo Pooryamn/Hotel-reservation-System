@@ -9,11 +9,11 @@
   font-family: 'myFont', sans-serif;
 }
 body{
-  margin: 0;
+  margin: 8px;
   padding: 0;
   font-family: sans-serif;
   background: url('img/img.jpg') no-repeat;
-  background-size: cover;
+  background-size: auto;
 }
 .login-box{
   width: 280px;

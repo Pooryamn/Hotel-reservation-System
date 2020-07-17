@@ -7,10 +7,14 @@
     <meta charset="utf-8">
     <title>ثبت نام</title>
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
   </head>
 
   <body>
-<div class="signup-box">
+    {% include "header.html" %}
+    <br><br><br>
+
+<div class="signup-box" style="margin-top: 180px;">
 <h1> ثبت نام کاربر </h1>
 
 <form method="post" action=".">

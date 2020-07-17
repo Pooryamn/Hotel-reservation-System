@@ -43,17 +43,17 @@ class ChangeProfileInfoForm(forms.Form):
         self.req_email = kwargs.pop('email', None)
         super(ChangeProfileInfoForm, self).__init__(*args, **kwargs)
 
-    username = forms.CharField(label='Username', required=True)
+    username = forms.CharField(label='نام کاربری', required=True)
     
-    first_name = forms.CharField(label='First name')
+    first_name = forms.CharField(label='نام')
 
-    last_name = forms.CharField(label='Last name')
+    last_name = forms.CharField(label='نام خانوادگی')
 
-    email = forms.EmailField(label='Email', required=True)
+    email = forms.EmailField(label='ایمیل', required=True)
 
-    phone = forms.CharField(label='Phone number', required=False)
+    phone = forms.CharField(label='تلفن همراه', required=False)
 
-    national_id = forms.CharField(label="National id", required=False)
+    national_id = forms.CharField(label="کد ملی", required=False)
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -74,10 +74,10 @@ class ChangeProfileInfoForm(forms.Form):
 
 class ChangePasswordForm(forms.Form):
     # password 
-    password = forms.CharField(label='Password',widget=forms.PasswordInput)
+    password = forms.CharField(label='رمز عبور',widget=forms.PasswordInput)
 
     # confrim password
-    password2 = forms.CharField(label='Repeat password',widget=forms.PasswordInput)
+    password2 = forms.CharField(label='تکرار رمز عبور',widget=forms.PasswordInput)
 
     def clean_password2(self):
             cd = self.cleaned_data

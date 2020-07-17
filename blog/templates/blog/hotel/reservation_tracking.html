@@ -8,11 +8,29 @@
     <meta charset="UTF-8">
     <title>پیگیری رزرو</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+    <style type="text/css">
+     .black-box{
+        font-family: Yekan;
+        direction: rtl;
+        color: white;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 3px;
 
+        float: right;
+        width:97%;
+        margin-right: 10px;
+        margin-left: 10px;
+        padding:10px;
+        margin-bottom: 5px;
+      }
+    </style>
 </head>
 <body style="color: white;">
 {% include "header.html" %}
 <br><br>
+
+<div class="black-box">
+
 <h2>
     پیگیری رزرو
 </h2>
@@ -43,6 +61,7 @@
     </p>
 </div>
 {% endif %}
+</div>
 
 </body>
 </html>

@@ -1,0 +1,69 @@
+@font-face {
+    font-family: Yekan;
+    src: url(font/Yekan.woff) format('woff');
+}
+* {
+  font-family: 'Yekan', sans-serif;
+}
+input, label {
+font-family: 'Yekan', sans-serif;
+padding: 0;
+margin: 0;
+outline: none;
+font-size: 14px;
+color: white;
+line-height: 22px;
+}
+legend {
+font-family: 'Yekan', sans-serif;
+
+padding: 10px;      
+font-size: 18px;
+color: #fff;
+border-radius: 3px;
+background-color: #4caf50;
+}
+
+.testbox {
+   
+  font-family: Yekan;
+  height: inherit;
+  /*border-radius: 3px;*/
+  padding: 20px;
+}
+
+form {
+/*width: 100%;*/
+font-family: 'Yekan', sans-serif;
+  direction: rtl;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  border-radius: 6px;
+/*background: #fff;*/
+  box-shadow: 0 0 8px #006622; 
+}
+
+input{
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 3px;
+}
+input {
+/*width: calc(100% - 10px);*/
+font-family: 'Yekan', sans-serif;
+width: 300px;
+padding: 5px;
+}
+
+.colums {
+font-family: 'Yekan', sans-serif;
+display:flex;
+justify-content:space-between;
+flex-direction:row;
+flex-wrap:wrap;
+}
+.btn-block {
+margin-top: 10px;
+text-align: center;
+}

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>صفحه کاربری</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
-
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" type="text/css">
 </head>
 <body>
 {% include "header.html" %}
@@ -23,22 +23,45 @@
 <a href="{%url 'blog:reservation_history'%}"><button>تاریخچه رزروها</button></a>
 </div>
 
-<div style="color:white;">
-<h3>تغییر اطلاعات حساب کاربری:</h3>
-<form method="post">
-    {% csrf_token %}
-    {{info_form.as_p}}
-    <input type="hidden" value="form1" name="form_select">
-    <input type="submit" value="ثبت تغییرات">
-</form>
-</div>
+    <div style="display: flex; flex-direction: row; justify-content: center;">
 
-<div style="color:white;">
-<h3>تغییر رمز عبور:</h3>
-<form method="post">
-    {% csrf_token %}
-    {{pass_form.as_p}}
-    <input type="hidden" value="form2" name="form_select">
-    <input type="submit" value="ثبت تغییرات">
-</form>
-</div>
+        <div class="testbox">
+        <form method="post">
+          <br/>
+          <fieldset>
+            <legend>تغییر رمز عبور</legend>
+            <div class="colums">
+                {% csrf_token %}
+                {{pass_form.as_p}}
+                <input type="hidden" value="form2" name="form_select">
+            </div>
+          </fieldset>
+          <br/>
+          <div class="btn-block">
+            <button type="submit">ثبت تغییرات</button>
+          </div>
+        </form>
+        </div>
+
+        <div class="testbox">
+        <form method="post">
+          <br/>
+          <fieldset>
+            <legend>تغییر اطلاعات حساب کاربری</legend>
+            <div class="colums">
+                {% csrf_token %}
+                {{info_form.as_p}}
+                <input type="hidden" value="form1" name="form_select">
+            </div>
+          </fieldset>
+          <br/>
+          <div class="btn-block">
+            <button type="submit">ثبت تغییرات</button>
+          </div>
+        </form>
+        </div>
+
+    </div>
+
+  </body>
+</html>

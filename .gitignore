@@ -9,6 +9,7 @@ migrations
 test_reserve.py
 html
 sign up-login
+hotel2
 
 # Backup files # 
 *.bak 
