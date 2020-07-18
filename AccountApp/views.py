@@ -158,6 +158,8 @@ def profile(request):
                 password = pass_form.cleaned_data["password"]
                 user.set_password(password)
                 user.save()
+                if user.is_active:
+                    login(request, user)
 
     if flag == 0 or flag == 2:
         profile_initial = {'username': user.username,
