@@ -1,0 +1,107 @@
+@font-face {
+    font-family: Yekan;
+    src: url(font/Yekan.woff) format('woff');
+}
+* {
+  font-family: 'Yekan', sans-serif;
+}
+table {
+  direction: rtl;
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+  background: #4caf50;
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: center;
+}
+table td.l, table th.l {
+  text-align: center;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+
+.table100-head th{
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+tbody tr {
+  /*font-family: OpenSans-Regular;*/
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:hover {
+  color: #555555;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.column1 {
+  width: 160px;
+  padding-left: 40px;
+}
+
+.column2 {
+  width: 160px;
+}
+
+.column3 {
+  width: 160px;
+}
+
+.column4 {
+  width: 110px;
+  /*text-align: right;*/
+}
+
+.column5 {
+  width: 170px;
+  /*text-align: right;*/
+}
+
+.column6 {
+  width: 120px;
+  /*text-align: right;*/
+  /*padding-right: 62px;*/
+}
+
+.column7 {
+  width: 100px;
+  /*text-align: right;*/
+  padding-right: 62px;
+}

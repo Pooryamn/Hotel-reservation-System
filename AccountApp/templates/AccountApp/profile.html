@@ -7,13 +7,41 @@
     <title>صفحه کاربری</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}" type="text/css">
+    <style type="text/css">
+        .black-box{
+            display: flex;
+            flex-direction: row;
+            /*justify-content: center;*/
+            /*align-items: stretch;*/
+            /*align-content: stretch;*/
+            /*flex-wrap: wrap;*/
+            font-family: Yekan;
+            direction: rtl;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 3px;
+
+            /*float: right;*/
+            width:95%;
+            box-shadow: 0 0 8px #006622; 
+            margin-right: auto;
+            margin-left: auto;
+            padding:10px;
+            margin-bottom: 5px;
+        }
+        .item{
+            align-self: auto;
+        }
+    </style>
 </head>
 <body>
 {% include "header.html" %}
-<br><br><br>
+<br><br>
 
-<div style="color:white;">
-<h3>اطلاعات حساب کاربری:</h3>
+<div class="black-box">
+
+<!-- <div class="item"><h3>اطلاعات حساب کاربری:</h3></div> -->
+<div class="item">
 نام کاربری: {{profile.user.username}}<br>
 نام: {{profile.user.first_name}}<br>
 نام خانوادگی: {{profile.user.last_name}}<br>
@@ -22,7 +50,8 @@
 کد ملی: {{profile.national_id}}<br>
 <a href="{%url 'blog:reservation_history'%}"><button>تاریخچه رزروها</button></a>
 </div>
-
+</div>
+<!-- <br /> -->
     <div style="display: flex; flex-direction: row; justify-content: center;">
 
         <div class="testbox">

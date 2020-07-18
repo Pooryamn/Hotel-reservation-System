@@ -5,38 +5,79 @@
 <html dir="rtl">
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>تاریخچه رزرو ها</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+        <style>
+      .pagination {
+        display: inline-block;
+        vertical-align: middle;
+        margin: auto;
+        /*text-align: center;*/
+        /*align-items: center;*/
+      }
+
+      .pagination a {
+        color: white;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+
+      .pagination a.active {
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+      }
+
+      .pagination a:hover:not(.active) {
+        background-color: green;
+        border-radius: 5px;
+      }
+    </style>
 </head>
 <body>
 {% include "header.html" %}
 
-<br><br><br>
-<table style="width:100%; color:white;">
-  <tr>
-    <th>هتل</th>
-    <th>تاریخ ورود</th>
-    <th>تاریخ خروج</th>
-    <th>قیمت نهایی</th>
-    <th>تاریخ رزرو</th>
-    <th>کد پیگیری</th>
-    <th>اتاق ها</th>
-  </tr>
-  {% for reserve in reserve_list %}
-      <tr>
-        <td>{{reserve.room.first.hotel}}</td>
-        <td>{{reserve.beginDate|to_jalali:'%y-%m-%d'}}</td>
-        <td>{{reserve.endDate|to_jalali:'%y-%m-%d'}}</td>
-        <td>{{reserve.totalPrice}}</td>
-        <td>{{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}</td>
-        <td>{{reserve.trackingCode}}</td>
-        <td>{% for room in reserve.room.all %}-{{room.room_number}}{% endfor %}</td>
-      </tr>
-  {% endfor %}
-</table>
+<br><br>
 
+<div style="margin: 8px;">
+  <p><h2 style="color: white;">تاریخچه رزروها:</h2></p>
+  <table>
+    <thead>
+      <tr class="table100-head">
+        <th class="column1">هتل</th>
+        <th class="column2">تاریخ ورود</th>
+        <th class="column3">تاریخ خروج</th>
+        <th class="column4">قیمت نهایی</th>
+        <th class="column5">تاریخ رزرو</th>
+        <th class="column6">کد پیگیری</th>
+        <th class="column7">اتاق ها</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserve in reserve_list %}
+        <tr>
+          <td class="column1">{{reserve.room.first.hotel}}</td>
+          <td class="column2">{{reserve.beginDate|to_jalali:'%y-%m-%d'}}</td>
+          <td class="column3">{{reserve.endDate|to_jalali:'%y-%m-%d'}}</td>
+          <td class="column4">{{reserve.totalPrice}}</td>
+          <td class="column5">{{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}</td>
+          <td class="column6">{{reserve.trackingCode}}</td>
+          <td class="column7">{% for room in reserve.room.all %}{{room.room_number}}-{% endfor %}</td>
+        </tr>
+      {% endfor %}        
+    </tbody>
+  </table>
+
+<br>
 <div class="pagination">
 {% for i in reserve_list.paginator.page_range %}
     <a href="?page={{i}}">{{ i }}</a>
 {% endfor %}
 </div>
+</div>
+
+</body>
+</html>
