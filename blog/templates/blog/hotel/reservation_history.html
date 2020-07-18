@@ -60,10 +60,10 @@
       {% for reserve in reserve_list %}
         <tr>
           <td class="column1">{{reserve.room.first.hotel}}</td>
-          <td class="column2">{{reserve.beginDate|to_jalali:'%y-%m-%d'}}</td>
-          <td class="column3">{{reserve.endDate|to_jalali:'%y-%m-%d'}}</td>
+          <td class="column2">{{reserve.beginDate|to_jalali:'%y/%m/%d'}}</td>
+          <td class="column3">{{reserve.endDate|to_jalali:'%y/%m/%d'}}</td>
           <td class="column4">{{reserve.totalPrice}}</td>
-          <td class="column5">{{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}</td>
+          <td class="column5">{{reserve.created|to_jalali:'%y/%m/%d - %H:%M:%S'}}</td>
           <td class="column6">{{reserve.trackingCode}}</td>
           <td class="column7">{% for room in reserve.room.all %}{{room.room_number}}-{% endfor %}</td>
         </tr>

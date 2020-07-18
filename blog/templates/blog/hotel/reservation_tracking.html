@@ -9,6 +9,13 @@
     <title>پیگیری رزرو</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
     <style type="text/css">
+        @font-face {
+            font-family: Yekan;
+            src: url(font/Yekan.woff) format('woff');
+        }
+        * {
+          font-family: 'Yekan', sans-serif;
+        }
      .black-box{
         font-family: Yekan;
         direction: rtl;
@@ -34,13 +41,12 @@
 <h2>
     پیگیری رزرو
 </h2>
-<hr>
-<br>
 <form method="post">
     {% csrf_token %}
     {{form.as_table}}
     <input type="submit" value="جست و جو">
 </form>
+<hr>
 
 {% if error_message %}<p><h3>{{ error_message }}</h3></p>{% endif %}
 
