@@ -1,5 +1,6 @@
 {% load jalali_tags%}
 {% load staticfiles %}
+{% load mytags %}
 
 
 <!DOCTYPE html>
@@ -63,7 +64,7 @@
         تاریخ اتمام اقامت: {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br />
         مجموع قیمت پرداختی:{{reserve.totalPrice}}<br />
         تاریخ رزرو: {{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}<br />
-        اتاق های: {% for room in reserve.room.all %}-{{room.room_number}}{% endfor %}<br />
+        اتاق های: {{ reserve|room_numbers }}<br />
     </p>
 </div>
 {% endif %}

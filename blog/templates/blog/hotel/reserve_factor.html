@@ -1,6 +1,6 @@
 {% load jalali_tags%}
-
 {% load staticfiles %}
+{% load mytags %}
 
 
 <!DOCTYPE html>
@@ -23,11 +23,7 @@
 تاریخ ورود:‌ {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br>
 تاریخ خروج:‌ {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br>
 مجموع قیمت: {{reserve.totalPrice}}<br>
-{% for room in reserve.room.all%}
-اتاق:
-    {{room.room_number}}<br>
-
-{% endfor %}
+اتاق های: {{ reserve|room_numbers }}
 </div>
 </body>
 </html>

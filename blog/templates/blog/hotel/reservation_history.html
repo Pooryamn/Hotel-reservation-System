@@ -1,5 +1,7 @@
 {% load jalali_tags%}
 {% load staticfiles %}
+{% load mytags %}
+
 
 <!DOCTYPE html>
 <html dir="rtl">
@@ -65,11 +67,12 @@
           <td class="column4">{{reserve.totalPrice}}</td>
           <td class="column5">{{reserve.created|to_jalali:'%y/%m/%d - %H:%M:%S'}}</td>
           <td class="column6">{{reserve.trackingCode}}</td>
-          <td class="column7">{% for room in reserve.room.all %}{{room.room_number}}-{% endfor %}</td>
+          <td class="column7">{{ reserve|room_numbers }}</td>
         </tr>
-      {% endfor %}        
+      {% endfor %}
     </tbody>
   </table>
+
 
 <br>
 <div class="pagination">
