@@ -6,6 +6,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>جست و جو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
     <!-- <link rel="stylesheet" href="{% static 'css/search.css' %}" type="text/css"> -->
 
@@ -45,6 +46,9 @@
         padding:10px;
         margin-bottom: 5px;
       }
+      .checked {
+        color: orange;
+      }
     </style>
 </head>
 <body style="color: white;">
@@ -63,41 +67,68 @@
 <hr>
 <h3>فیلتر نتایج:</h3>
 <form method="get">
-    <h4>شهر:</h4>
-    {% for city in city_list %}
-        <span dir="ltr"><input type="checkbox" id="{{ forcount.loop }}" 
-        value="{{city}}" name="city_checked" {% if city in city_checked_url %}checked{% endif %}>
-        <label for="{{ forcount.loop }}">{{city}}</label></span>
-    {% endfor %}
-    
-    <br />
-    <h4>درجه هتل:</h4>
-    <span dir="ltr"><input type="checkbox" id="rank1" 
-    value="1" name="ranking_checked" {% if '1' in ranking_checked_url %}checked{% endif %}>
-    <label for="rank1">1</label></span>
-    
-    <span dir="ltr"><input type="checkbox" id="rank2" 
-    value="2" name="ranking_checked" {% if '2' in ranking_checked_url %}checked{% endif %}>
-    <label for="rank2">2</label></span>
-    
-    <span dir="ltr"><input type="checkbox" id="rank3" 
-    value="3" name="ranking_checked" {% if '3' in ranking_checked_url %}checked{% endif %}>
-    <label for="rank3">3</label></span>
-    
-    <span dir="ltr"><input type="checkbox" id="rank4" 
-    value="4" name="ranking_checked" {% if '4' in ranking_checked_url %}checked{% endif %}>
-    <label for="rank4">4</label></span>
-    
-    <span dir="ltr"><input type="checkbox" id="rank5" 
-    value="5" name="ranking_checked" {% if '5' in ranking_checked_url %}checked{% endif %}>
-    <label for="rank5">5</label></span>
+  <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+    <div style="margin-right: 20px; margin-left:60px;">
+        <h4>شهر:</h4>
+        {% for city in city_list %}
+            <div><input type="checkbox" id="{{ forcount.loop }}" 
+            value="{{city}}" name="city_checked" {% if city in city_checked_url %}checked{% endif %}>
+            <label for="{{ forcount.loop }}">{{city}}</label></div>
+        {% endfor %}
+    </div>
+    <div>
+        <h4>درجه هتل:</h4>
+        <div>
+          <input type="checkbox" id="rank1" value="1" name="ranking_checked" {% if '1' in ranking_checked_url %}checked{% endif %}>
+          <label for="rank1">
+            <span class="fa fa-star checked"></span>
+          </label>
+        </div>
+        
+        <div>
+          <input type="checkbox" id="rank2" value="2" name="ranking_checked" {% if '2' in ranking_checked_url %}checked{% endif %}>
+          <label for="rank2">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+          </label>
+        </div>
+        
+        <div>
+          <input type="checkbox" id="rank3" value="3" name="ranking_checked" {% if '3' in ranking_checked_url %}checked{% endif %}>
+          <label for="rank3">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+          </label>
+        </div>
+        
+        <div>
+          <input type="checkbox" id="rank4" value="4" name="ranking_checked" {% if '4' in ranking_checked_url %}checked{% endif %}>
+          <label for="rank4">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+          </label>
+        </div>
+        
+        <div>
+          <input type="checkbox" id="rank5" value="5" name="ranking_checked" {% if '5' in ranking_checked_url %}checked{% endif %}>
+          <label for="rank5">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+          </label>
+        </div>
+    </div>
+  </div>
 
-    <br />
-    <br />
-    <input type="hidden" value="form2" name="form_select">
-    <input type="submit" value="اعمال فیلتر">
+  <br />
+  <input type="hidden" value="form2" name="form_select">
+  <input type="submit" value="اعمال فیلتر">
 </form>
-<!-- </div> -->
 
 <hr>
 <!-- <div class="black-box"> -->
