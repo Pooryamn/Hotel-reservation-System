@@ -23,5 +23,20 @@
 
 <a href="{% url 'blog:hotel_reserve' hotel.id %}"><input type="button" value="رزرو"></a>
 
+
+
+<form method="post">
+    {% csrf_token %}
+    {{score_form.as_p}}
+    <input type="submit" value="ارسال نظر">
+</form>
+
+
+<p>
+    {% for item in scores_list %}
+        {{item.score}}<br />
+        {{item.description}}<br />
+    {% endfor %}
+</p>
 </body>
 </html>

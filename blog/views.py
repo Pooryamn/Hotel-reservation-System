@@ -8,9 +8,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from jalali_date import datetime2jalali, date2jalali
-from .models import Hotel, Room, Reserve
-from .forms import HotelDatePickerForm, ReservationTrackingForm
-
+from .models import Hotel, Room, Reserve, Score
+from .forms import HotelDatePickerForm, ReservationTrackingForm, ScoreForm
 
 
 def home_page(request):
@@ -19,9 +18,26 @@ def home_page(request):
     return render(request, 'blog/hotel/home.html', {'hotel_suggestions': hotel_suggestions})
 
 
+@require_http_methods(["POST", "GET"])
 def hotel_detail(request, id):
     hotel = get_object_or_404(Hotel, id=id)
-    return render(request, 'blog/hotel/detail.html', {'hotel': hotel})
+    
+    if request.method == "POST" and request.user.is_authenticated:  
+        score_form = ScoreForm(request.POST)
+        if score_form.is_valid():
+            score = score_form.save(commit=False)
+            score.user  = request.user
+            score.hotel = hotel
+            score.save()
+    else:
+        score_form = ScoreForm()
+        
+    scores_list = Score.objects.filter(hotel=hotel)
+
+    return render(request, 'blog/hotel/detail.html',
+                 {'hotel': hotel,
+                  'score_form': score_form,
+                  'scores_list': scores_list})
 
 
 @login_required
@@ -309,3 +325,4 @@ def send_factor_email(reserve):
 
     # main part of sending :
     send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=True)
+
