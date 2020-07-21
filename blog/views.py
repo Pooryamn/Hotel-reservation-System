@@ -326,3 +326,18 @@ def send_factor_email(reserve):
     # main part of sending :
     send_mail(Email_Subject,Email_Body,settings.EMAIL_HOST_USER,Email_reciver,fail_silently=True)
 
+
+def compare_hotel(request):
+    hotel1 = None
+    hotel2 = None
+    if request.method == "POST":
+        hotel1 = get_object_or_404(Hotel, id=request.POST['hotel1'])
+        hotel2 = get_object_or_404(Hotel, id=request.POST['hotel2'])
+        
+    hotel_list = Hotel.objects.all()    
+
+    return render(request, 'blog/hotel/compare_hotel.html',
+                  {'hotel_list': hotel_list,
+                   'hotel1': hotel1,
+                   'hotel2': hotel2,
+                  })

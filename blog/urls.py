@@ -10,5 +10,6 @@ urlpatterns = [
     path('search/', views.search, name="search"),
     path('reserve-factor/<str:tracking_code>/', views.reserve_factor, name='reserve_factor'),
     path('reservation-history/', views.reservation_history, name='reservation_history'),
-    path('reservation-tracking/', views.reservation_tracking, name='reservation_tracking'),    
+    path('reservation-tracking/', views.reservation_tracking, name='reservation_tracking'),
+    path('compare-hotel/', views.compare_hotel, name='compare_hotel'),
 ]
