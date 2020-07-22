@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, api_view
 
 # app_name = "blog"
 
@@ -12,4 +12,7 @@ urlpatterns = [
     path('reservation-history/', views.reservation_history, name='reservation_history'),
     path('reservation-tracking/', views.reservation_tracking, name='reservation_tracking'),
     path('compare-hotel/', views.compare_hotel, name='compare_hotel'),
+    path('api/reservation-tracking/',
+        api_view.ReserveTrackingAPIView.as_view(),
+        name='api_reservation_tracking')
 ]
