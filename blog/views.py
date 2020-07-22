@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from jalali_date import datetime2jalali, date2jalali
-from .models import Hotel, Room, Reserve, Score
+from .models import Hotel, Room, Reserve, Score, HotelPicture
 from .forms import HotelDatePickerForm, ReservationTrackingForm, ScoreForm
 
 
@@ -330,14 +330,20 @@ def send_factor_email(reserve):
 def compare_hotel(request):
     hotel1 = None
     hotel2 = None
+    pic1 = None
+    pic2 = None
     if request.method == "POST":
-        hotel1 = get_object_or_404(Hotel, id=request.POST['hotel1'])
-        hotel2 = get_object_or_404(Hotel, id=request.POST['hotel2'])
-        
+        hotel1 = get_object_or_404(Hotel, id=request.POST.get('hotel1', 1))
+        hotel2 = get_object_or_404(Hotel, id=request.POST.get('hotel2', 2))
+        pic1 = HotelPicture.objects.filter(hotel=hotel1).first()
+        pic2 = HotelPicture.objects.filter(hotel=hotel2).first()
+
     hotel_list = Hotel.objects.all()    
 
     return render(request, 'blog/hotel/compare_hotel.html',
                   {'hotel_list': hotel_list,
                    'hotel1': hotel1,
                    'hotel2': hotel2,
+                   'pic1': pic1,
+                   'pic2': pic2,
                   })

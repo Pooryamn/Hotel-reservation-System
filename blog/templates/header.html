@@ -10,6 +10,7 @@
                 <li><a href="{%url 'blog:home'%}">خانه</a></li>
                 <li><a href="{%url 'blog:search'%}">جست و جو</a></li>
                 <li> <a href="{%url 'blog:reservation_tracking'%}">پیگیری رزرو</a></li>
+                <li> <a href="{%url 'blog:compare_hotel'%}">مقایسه هتل</a></li>
                 {% if request.user.is_authenticated %}
                     <li><a href="{%url 'AccountApp:profile'%}">حساب کاربری</a></li>
                     <li><a href="{%url 'AccountApp:logout'%}">خروج</a></li>

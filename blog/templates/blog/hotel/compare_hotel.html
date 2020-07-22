@@ -9,13 +9,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>مقایسه هتل ها</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
-
+    <link rel="stylesheet" href="{% static 'css/compare_hotel.css' %}" type="text/css">
 </head>
 <body style="color: white;">
 {% include "header.html" %}
-<br><br><br>
+<br><br>
+<div class="black-box">
+
+<h3>مقایسه هتل ها</h3>
 
 <form method="post">
     {% csrf_token %}
@@ -39,145 +42,67 @@
     <input type="submit" value="مقایسه کن">
 </form>
 
-
+</div>
 
 {% if hotel1 and hotel2 %}
-    <div style="margin: 8px;">
-      <center><p><h2 style="color: white;">مقایسه هتل {{hotel1.name}} با {{hotel2.name}}</h2></p></center>
-      <table>
-        <thead>
-          <tr>
-            <th class="column1"></th>
-            <th class="column2"></th>
-            <th class="column3"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td class="column1">نام هتل</td>
-              <td class="column2">{{hotel1.name}}</td>
-              <td class="column3">{{hotel2.name}}</td>
-            </tr>
-            <tr>
-              <td class="column1">درجه</td>
-              <td class="column2">{{hotel1.rating}}</td>
-              <td class="column3">{{hotel2.rating}}</td>
-            </tr>
-            <tr>
-              <td class="column1">آدرس</td>
-              <td class="column2">{{hotel1.address}}</td>
-              <td class="column3">{{hotel2.address}}</td>
-            </tr>
-            <tr>
-              <td class="column1">توضیحات</td>
-              <td class="column2">{{hotel1.description}}</td>
-              <td class="column3">{{hotel2.description}}</td>
-            </tr>
-            <tr>
-              <td class="column1">شروع قیمت از (تومان)</td>
-              <td class="column2">{{hotel1.ordinary_rooms_price}}</td>
-              <td class="column3">{{hotel2.ordinary_rooms_price}}</td>
-            </tr>
-            <tr>
-              <td class="column1">بیشترین قیمت (تومان)</td>
-              <td class="column2">{{hotel1.vip_rooms_price}}</td>
-              <td class="column3">{{hotel2.vip_rooms_price}}</td>
-            </tr>
-            <tr>
-              <td class="column1">تخفیف (درصد)</td>
-              <td class="column2">{{hotel1.discount}}</td>
-              <td class="column3">{{hotel2.discount}}</td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
+
+<table class="table-fill">
+<tbody>
+<tr>
+  <td class="column1"></td>
+  <td class="text-right"><img class="hotel-img" src="{{pic1.picture.url}}"></td>
+  <td class="text-right"><img class="hotel-img" src="{{pic2.picture.url}}"></td>
+</tr>
+<tr>
+  <td class="column1">نام هتل</td>
+  <td class="text-right hotel-name">
+    <a href="{{ hotel1.get_absolute_url }}">هتل {{hotel1.name}}</a>
+  </td>
+  <td class="text-right hotel-name">
+    <a href="{{ hotel2.get_absolute_url }}">هتل {{hotel2.name}}</a>
+  </td>
+</tr>
+<tr>
+  <td class="column1">درجه</td>
+  <td class="text-right">
+    {% for i in hotel1.rating|myrange %}
+        <span class="fa fa-star checked"></span>
+    {% endfor %}
+  </td>
+  <td class="text-right">
+    {% for i in hotel2.rating|myrange %}
+        <span class="fa fa-star checked"></span>
+    {% endfor %}
+  </td>
+</tr>
+<tr>
+  <td class="column1">آدرس</td>
+  <td class="text-right">{{hotel1.address}}</td>
+  <td class="text-right">{{hotel2.address}}</td>
+</tr>
+<tr>
+  <td class="column1">توضیحات</td>
+  <td class="text-right">{{hotel1.description}}</td>
+  <td class="text-right">{{hotel2.description}}</td>
+</tr>
+<tr>
+  <td class="column1">شروع قیمت از (تومان)</td>
+  <td class="text-right">{{hotel1.ordinary_rooms_price}}</td>
+  <td class="text-right">{{hotel2.ordinary_rooms_price}}</td>
+</tr>
+<tr>
+  <td class="column1">بیشترین قیمت (تومان)</td>
+  <td class="text-right">{{hotel1.vip_rooms_price}}</td>
+  <td class="text-right">{{hotel2.vip_rooms_price}}</td>
+</tr>
+<tr>
+  <td class="column1">تخفیف (درصد)</td>
+  <td class="text-right">{{hotel1.discount}}</td>
+  <td class="text-right">{{hotel2.discount}}</td>
+</tr>
+</tbody>
+</table>
 {% endif %}
 
-<style type="text/css">
-    @font-face {
-    font-family: Yekan;
-    src: url(font/Yekan.woff) format('woff');
-}
-* {
-  font-family: 'Yekan', sans-serif;
-}
-table {
-  direction: rtl;
-  border-spacing: 1;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 5px;
-  overflow: hidden;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-table * {
-  position: relative;
-}
-table td, table th {
-  padding-left: 8px;
-}
-table thead tr {
-  height: auto;
-  background: #4caf50;
-}
-table tbody tr {
-  height: 50px;
-}
-table tbody tr:last-child {
-  border: 0;
-}
-table td, table th {
-  text-align: right;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
-
-.black-box{
-        font-family: Yekan;
-        direction: rtl;
-        color: white;
-        background-color: rgba(0,0,0,0.5);
-        border-radius: 3px;
-
-        float: right;
-        width:97%;
-        margin-right: 10px;
-        margin-left: 10px;
-        padding:10px;
-        margin-bottom: 5px;
-      }
-
-tbody tr {
-  /*font-family: OpenSans-Regular;*/
-  font-size: 15px;
-  color: #808080;
-  line-height: 1.2;
-  font-weight: unset;
-}
-
-tbody tr:hover {
-  color: #555555;
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-
-.column1 { 
-  width: 160px;
-  /*padding-left: 40px;*/
-}
-
-.column2 {
-  width: 160px;
-}
-
-.column3 {
-  width: 160px;
-}
-
-</style>
 </body>
 </html>
