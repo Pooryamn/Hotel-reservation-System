@@ -27,3 +27,7 @@ class ScoreForm(forms.ModelForm):
     class Meta:
         model = Score
         fields = ('score', 'description')
+        widgets = {
+                    'description': forms.Textarea(attrs={'class':'textarea-form', 'cols': 65, 'rows': 8}),
+                    'score': forms.RadioSelect(choices=[(1,1),(2,2),(3,3),(4,4),(5,5)]),
+                  }

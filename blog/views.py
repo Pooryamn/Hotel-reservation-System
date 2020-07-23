@@ -15,13 +15,17 @@ from .forms import HotelDatePickerForm, ReservationTrackingForm, ScoreForm
 def home_page(request):
     hotel_suggestions = Hotel.objects.filter(rating__gt=3).order_by('-rating')
     hotel_suggestions = hotel_suggestions[:3]
-    return render(request, 'blog/hotel/home.html', {'hotel_suggestions': hotel_suggestions})
+
+    return render(request, 'blog/hotel/home.html',
+                 {'hotel_suggestions': hotel_suggestions,
+                 })
 
 
 @require_http_methods(["POST", "GET"])
 def hotel_detail(request, id):
     hotel = get_object_or_404(Hotel, id=id)
-    
+    pictures = HotelPicture.objects.filter(hotel=hotel)
+
     if request.method == "POST" and request.user.is_authenticated:  
         score_form = ScoreForm(request.POST)
         if score_form.is_valid():
@@ -32,12 +36,13 @@ def hotel_detail(request, id):
     else:
         score_form = ScoreForm()
         
-    scores_list = Score.objects.filter(hotel=hotel)
+    scores_list = Score.objects.filter(hotel=hotel).order_by('-created')[:3]
 
-    return render(request, 'blog/hotel/detail.html',
+    return render(request, 'blog/hotel/hotel_detail.html',
                  {'hotel': hotel,
                   'score_form': score_form,
-                  'scores_list': scores_list})
+                  'scores_list': scores_list,
+                  'pictures': pictures})
 
 
 @login_required

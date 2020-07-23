@@ -30,9 +30,9 @@ class Hotel(models.Model):
     city = models.CharField(max_length=40)
     
     ordinary_rooms = models.IntegerField()
-    ordinary_rooms_price = models.FloatField()
+    ordinary_rooms_price = models.IntegerField()
     vip_rooms = models.IntegerField()
-    vip_rooms_price = models.FloatField()
+    vip_rooms_price = models.IntegerField()
     
     discount = models.IntegerField()
 
@@ -44,18 +44,19 @@ class Hotel(models.Model):
 
 
 def make_rooms(sender, **kwargs):
-    ordinary_rooms          = kwargs['instance'].ordinary_rooms
-    ordinary_rooms_price    = kwargs['instance'].ordinary_rooms_price
-    vip_rooms               = kwargs['instance'].vip_rooms
-    vip_rooms_price         = kwargs['instance'].vip_rooms_price
+    if not Room.objects.filter(hotel=kwargs['instance']):
+        ordinary_rooms          = kwargs['instance'].ordinary_rooms
+        ordinary_rooms_price    = kwargs['instance'].ordinary_rooms_price
+        vip_rooms               = kwargs['instance'].vip_rooms
+        vip_rooms_price         = kwargs['instance'].vip_rooms_price
 
-    for i in range(1, ordinary_rooms + vip_rooms + 1):
-        if i<=ordinary_rooms:
-            Room.objects.create(hotel=kwargs['instance'], room_number=i,
-                            room_type='ordinary', price=ordinary_rooms_price)
-        else:
-            Room.objects.create(hotel=kwargs['instance'], room_number=i,
-                            room_type='vip', price=vip_rooms_price)
+        for i in range(1, ordinary_rooms + vip_rooms + 1):
+            if i<=ordinary_rooms:
+                Room.objects.create(hotel=kwargs['instance'], room_number=i,
+                                room_type='ordinary', price=ordinary_rooms_price)
+            else:
+                Room.objects.create(hotel=kwargs['instance'], room_number=i,
+                                room_type='vip', price=vip_rooms_price)
 
 post_save.connect(make_rooms, sender=Hotel)
 
@@ -69,7 +70,7 @@ class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     room_number = models.IntegerField()
     room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES, default='ordinary')
-    price = models.FloatField()
+    price = models.IntegerField()
 
     def __str__(self):
         return  'Room {}-{}'.format(self.hotel.name, self.room_number)
@@ -84,7 +85,7 @@ class Reserve(models.Model):
     room = models.ManyToManyField(Room)
     beginDate       = models.DateField()
     endDate         = models.DateField()
-    totalPrice      = models.FloatField()
+    totalPrice      = models.IntegerField()
     trackingCode    = models.CharField(max_length=10, unique=True, default=track_code_generator)
     created         = models.DateTimeField(auto_now_add=True)
     status          = models.CharField(max_length=10, choices=STATUS_CHOICES, default='open')
@@ -94,7 +95,7 @@ class Reserve(models.Model):
 
 
 class HotelPicture(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="hotel_pictures")
     picture = models.ImageField(upload_to=hotel_directory_path, null=False)
 
     def __str__(self):
@@ -106,6 +107,7 @@ class Score(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     score = models.SmallIntegerField()
     description = models.TextField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return  'Score {1}-{0}'.format(self.hotel.name, self.user.username)

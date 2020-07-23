@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Yekan;
+    src: url(font/Yekan.eot) format('eot'),
+    url(font/Yekan.woff) format('woff'),
+    url(font/Yekan.ttf) format('truetype');
+}
+    
+.row1{
+    font-family: Yekan;
+    /*font-size: 18px;*/
+    direction: rtl;
+    /*background-color: rgba(0,0,0,0.5) !important;*/
+    border-radius: 3px;
+    /*padding: 5px;*/
+}

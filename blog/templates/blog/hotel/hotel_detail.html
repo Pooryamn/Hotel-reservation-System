@@ -1,0 +1,202 @@
+{% load static %}
+{% load mytags %}
+
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>هتل {{hotel.name}}</title>
+    <link rel="stylesheet" href="{% static 'css/hotel_detail.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body onload="showSlides(1);">
+<script>
+    var slideIndex = 1;
+    // showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+</script>
+
+{% include "header.html" %}
+<br><br><br>
+<div class="wrapper2 row2">
+
+    <div class="top1">
+        <table>
+            <tr>
+                <td>
+                    <h2>
+                        هتل {{hotel.name}}
+                    </h2>
+
+                </td>
+                {%if hotel.logo %}
+                <td rowspan="2">
+                    <img  src="{{ hotel.logo.url }}">
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td >
+                    {% for i in hotel.rating|hotelstar %}
+                        {% if i == 1 %}
+                            <span class="fa fa-star checked"></span>
+                        {% else %}
+                            <span class="fa fa-star"></span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br><br>
+    <div class="top2">
+    <div class="ss-single-main-cih-price-container">
+        <div class="ss-single-main-cih-off-label">
+            <span class="ss-single-main-cih-offl-name">تخفیف</span>
+            <span class="ss-single-main-cih-offl-no">%{{hotel.discount}}</span>
+        </div>
+
+        <div class="ss-single-main-cihp-price">
+            <span class="ss-single-main-cihpp-old">{{hotel.ordinary_rooms_price}} تومان</span>
+            <span class="ss-single-main-cihpp-no ss-red">
+                {% cal_discount hotel.ordinary_rooms_price hotel.discount %} تومان
+            </span>
+        </div>
+    </div>
+    </div>
+
+    <div class="mid1 clear">
+      <p dir="rtl">
+          آدرس هتل: {{hotel.address}}
+      </p>
+        <hr>
+      <p dir="rtl">
+          <img style="width:15px; height:15px;" src="{% static 'css/img/phone-icon.png' %}">
+          تلفن تماس: <span style="color: #4caf50">{{hotel.phone}}</span> 
+      </p>
+        <br>
+        <div class="inf" dir="rtl">
+                     تعداد اتاق<br/>
+                     {{hotel.ordinary_rooms|add:hotel.vip_rooms}}
+
+        </div>
+        <div class="mihanwp-box">
+            <p dir="rtl">
+                {{hotel.description}}
+            </p>
+        </div>
+        <br>
+        <a href="{% url 'blog:hotel_reserve' hotel.id %}"><input style="float: left;" class="button" type="submit" value="رزرو"></a>
+
+    </div>
+    <br>
+    <div class="mid2 ">
+        <div class="slideshow-container">
+            {% for item in pictures %}
+                <div class="mySlides fade">
+                    <div class="numbertext">{{forloop.counter}} / {{pictures|length}}</div>
+                    <img src="{{item.picture.url}}" style="width:100%">
+                    <!-- <div class="text">لابی</div> -->
+                </div>
+            {% endfor %}
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            {% for i in pictures|length|myrange %}
+                <span class="dot" onclick="currentSlide({{i|add:1}});"></span>
+            {% endfor %}
+        </div>
+      </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+</div>
+<br><br>
+<div class="comments">
+    <div class="textarea clear">
+    <form method="POST">
+    <div class="rating-box">
+         <table>
+             <tr>
+                 <td>
+        <div class="rating">
+            {% for radio in score_form.score %}
+                <input id="rating-{{forloop.revcounter}}" type="radio" name="score" value="{{forloop.revcounter}}"/>
+                <label for="rating-{{forloop.revcounter}}">
+                    <i class="fa fa-star"></i>
+                </label>
+            {% endfor %}
+        </div> 
+                 </td>
+                 <td>
+                     <h4 >به این هتل امتیاز دهید</h4>
+                 </td>
+             </tr>
+         </table>
+    </div>
+    <br><br>
+        {{ score_form.description }}
+
+        <br>
+        <input class="button" type="submit" value="ثبت نظر">
+        {% csrf_token %}
+    </form>
+    </div>
+
+
+    <div class="usercm">
+        <h4 style="text-align: right; margin-right: 15px">نظر کاربران </h4>
+        
+        {% for comment in scores_list %}
+
+            <div class="user">
+                <p>کاربر:‌ {{comment.user.username}} امتیاز: {{comment.score}}</p>
+                <p>{{comment.description}}</p>
+            </div>
+
+        {% endfor %}
+        <br><br><br><br>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<div class="wrapper3 row3">
+    <footer id="footer" class="clear">
+        <p class="fl_left">Copyright &copy; 2020 - All Rights Reserved </p>
+
+        <p class="fl_right">designed by qazal</p>
+    </footer>
+</div>
+
+</body>
+</html>
