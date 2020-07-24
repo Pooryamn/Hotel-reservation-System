@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load mytags %}
 
 
 <!DOCTYPE html>
@@ -13,6 +14,7 @@
     <style>
       .pagination {
         display: inline-block;
+        margin-right: 20px;
       }
 
       .pagination a {
@@ -48,6 +50,41 @@
       }
       .checked {
         color: orange;
+      }
+      .container {
+        display: grid;
+        grid-gap: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto; 
+      }
+      .hotel-card {
+        display: grid;
+        background-color: #f2f2f2;
+        color: black;
+        width: auto;
+        /*padding: 5px;*/
+        border-radius: 5px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+          "info img";
+      }
+      .hotel-img {
+        grid-area: img;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      .hotel-info {
+        grid-area: info;
+        padding-right: 20px; 
+      }
+      h3 a:hover {
+        color: #4CAF50;
+      }
+      h3 a {
+        color: black;
       }
     </style>
 </head>
@@ -133,14 +170,41 @@
 <hr>
 <!-- <div class="black-box"> -->
 <h2><p>لیست هتل ها:</p></h2>
+
+<div class="container">
 {% for hotel in hotel_list %}
-    
+<!--     
     <h4>
         <a href="{{ hotel.get_absolute_url }}">
             {{hotel.name}}
         </a>
-    </h4>
+    </h4> -->
+      <div class="hotel-card">
+        <img class="hotel-img" width="330px" height="230px" src="{{hotel|hotel_picture}}">
+        <div class="hotel-info">
+          <h3>
+            <a href="{{ hotel.get_absolute_url }}">
+              هتل {{hotel.name}}
+            </a>
+          </h3>
+          {% for i in hotel.rating|hotelstar %}
+            {% if i == 1 %}
+                <span class="fa fa-star checked"></span>
+            {% else %}
+                <span class="fa fa-star"></span>
+            {% endif %}
+          {% endfor %}
+          <br>
+          قیمت از: {{hotel.ordinary_rooms_price}} تومان<br>
+          تا {{hotel.discount}}% تخفیف
+        </div>
+      </div>
 {% endfor %}
+</div>
+
+
+
+
 
 <div class="pagination">
 {% if request.GET.form_select == "form2" %}

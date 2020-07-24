@@ -34,5 +34,7 @@ def cal_discount(price, discount):
 
 @register.filter
 def hotel_picture(hotel):
-    return hotel.hotel_pictures.first().picture.url
-
+    if hotel.hotel_pictures.first():
+        return hotel.hotel_pictures.first().picture.url
+    else:
+        return None

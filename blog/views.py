@@ -217,7 +217,7 @@ def search(request):
         hotel_list = Hotel.objects.all()
 
     ### pagination hotel_list
-    paginator = Paginator(hotel_list, 3) # 3 posts in each page
+    paginator = Paginator(hotel_list, 4) # 4 posts in each page
     page = request.GET.get('page')
     if page == None:
         page = 1
