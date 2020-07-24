@@ -130,9 +130,9 @@
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         </div>
-        <br>
+        <!-- <br> -->
 
-        <div style="text-align:center">
+        <div style="text-align:center; margin-top: 5px;">
             {% for i in pictures|length|myrange %}
                 <span class="dot" onclick="currentSlide({{i|add:1}});"></span>
             {% endfor %}
