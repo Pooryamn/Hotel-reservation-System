@@ -10,20 +10,87 @@
     <title>فاکتور رزرو</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
     <!-- <link rel="stylesheet" href="{% static 'css/search.css' %}" type="text/css"> -->
+    <style type="text/css">
+        h3{
+            color:white;
+            text-align: center;
+        }
+        table{
+            background-color: whitesmoke;
+            border: gray solid 2px;
+            border-radius: 2px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 50%;
+            height: 300px;
+        }
+        table td{
+            padding: 10px;
+            text-align: right;
+            border: 1px solid black;
+            border-radius: 2px;
+        }
+        a{
+            text-decoration: none;
+            color:  #4caf50;
+        }
+        .h3{
+            background-color: chartreuse;
+            border-radius: 10px;
+            width: 100px;
+            margin-left:auto ;
+            margin-right:auto ;
+        }
+        h3{
+            color: black;
+        }
+    </style>
 </head>
 <body>
 {% include "header.html" %}
 <br><br><br>
 <div style="color: white;">
 <h2>رزرو با موفقیت انجام شد</h2>
-    
-
-کاربر:‌ {{reserve.user.username}}<br>
-کد پیگیری:‌ {{reserve.trackingCode}}<br>
-تاریخ ورود:‌ {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br>
-تاریخ خروج:‌ {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br>
-مجموع قیمت: {{reserve.totalPrice}}<br>
-اتاق های: {{ reserve|room_numbers }}
 </div>
+
+<div class="h3">
+    <h3>
+        فاکتور رزرو
+    </h3>
+</div>
+
+<table>
+    <tr>
+       <td colspan="2" style="text-align: right"> نام هتل: {{reserve.room.first.hotel }} </td>
+    </tr>
+    <tr>
+        <td>
+            نام: {{reserve.user.first_name}}
+        </td>
+        <td>
+            نام خانوادگی: {{reserve.user.last_name}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right;"> تاریخ ورود: {{reserve.beginDate|to_jalali:'%d/ %m/ %y'}}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right"> تاریخ خروج: {{reserve.endDate|to_jalali:'%d/ %m/ %y'}}</td>
+    </tr>
+    <tr>
+        <td>
+           مجموع قیمت: {{reserve.totalPrice}}
+        </td>
+        <td>
+            شماره پیگیری:‌ {{reserve.trackingCode}}
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right">اتاق های رزرو شده: {{ reserve|room_numbers }}</td>
+    </tr>
+</table>
+<br><br><br>
+
 </body>
 </html>

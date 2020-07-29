@@ -20,7 +20,7 @@
      .black-box{
         font-family: Yekan;
         direction: rtl;
-        color: white;
+        /*color: white;*/
         background-color: rgba(0,0,0,0.5);
         border-radius: 3px;
 
@@ -29,16 +29,52 @@
         margin-right: 10px;
         margin-left: 10px;
         padding:10px;
-        margin-bottom: 5px;
+        /*margin-bottom: 5px;*/
       }
     </style>
+    <style type="text/css">
+        h3{
+            color:white;
+            text-align: center;
+        }
+        table{
+            background-color: whitesmoke;
+            border: gray solid 2px;
+            border-radius: 2px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 50%;
+            height: 300px;
+        }
+        table td{
+            padding: 10px;
+            text-align: right;
+            border: 1px solid black;
+            border-radius: 2px;
+        }
+        a{
+            text-decoration: none;
+            color:  #4caf50;
+        }
+        .h3{
+            background-color: chartreuse;
+            border-radius: 10px;
+            width: 100px;
+            margin-left:auto ;
+            margin-right:auto ;
+        }
+        h3{
+            color: black;
+        }
+    </style>
 </head>
-<body style="color: white;">
+<body>
 {% include "header.html" %}
 <br><br>
 
 <div class="black-box">
 
+<div style="color: white;">
 <h2>
     پیگیری رزرو
 </h2>
@@ -49,24 +85,54 @@
 </form>
 <hr>
 
-{% if error_message %}<p><h3>{{ error_message }}</h3></p>{% endif %}
-
-{% if reserve %}
-<div>
-    <p>
-        اطلاعات به ایمیل شما ارسال شد.
-    </p>
-
-    <p>
-        نام کاربری: {{reserve.user.username}}<br />
-        هتل: {{reserve.room.first.hotel}}<br />
-        تاریخ شروع اقامت: {{reserve.beginDate|to_jalali:'%y-%m-%d'}}<br />
-        تاریخ اتمام اقامت: {{reserve.endDate|to_jalali:'%y-%m-%d'}}<br />
-        مجموع قیمت پرداختی:{{reserve.totalPrice}}<br />
-        تاریخ رزرو: {{reserve.created|to_jalali:'%y-%m-%d / %H:%M:%S'}}<br />
-        اتاق های: {{ reserve|room_numbers }}<br />
-    </p>
+{% if error_message %}<p><h3 style="color: white;">{{ error_message }}</h3></p>{% endif %}
 </div>
+{% if reserve %}
+
+<br>
+
+<h3 style="color: white;">
+اطلاعات به ایمیل شما ارسال شد.
+</h3>
+<br>
+<table>
+    <tr>
+       <td colspan="2" style="text-align: right"> نام هتل: {{reserve.room.first.hotel }} </td>
+    </tr>
+    <tr>
+        <td>
+            نام: {{reserve.user.first_name}}
+        </td>
+        <td>
+            نام خانوادگی: {{reserve.user.last_name}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right;"> تاریخ ورود: {{reserve.beginDate|to_jalali:'%d/ %m/ %y'}}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right"> تاریخ خروج: {{reserve.endDate|to_jalali:'%d/ %m/ %y'}}</td>
+    </tr>
+    <tr>
+        <td>
+           مجموع قیمت: {{reserve.totalPrice}}
+        </td>
+        <td>
+            شماره پیگیری:‌ {{reserve.trackingCode}}
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right">اتاق های رزرو شده: {{ reserve|room_numbers }}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right">
+            تاریخ رزرو: {{reserve.created|to_jalali:'%d/ %m/ %y - %H:%M:%S'}}<br />
+        </td>
+    </tr>
+</table>
+<br><br>
+
 {% endif %}
 </div>
 
