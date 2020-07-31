@@ -26,13 +26,16 @@ def hotel_detail(request, id):
     hotel = get_object_or_404(Hotel, id=id)
     pictures = HotelPicture.objects.filter(hotel=hotel)
 
-    if request.method == "POST" and request.user.is_authenticated:  
-        score_form = ScoreForm(request.POST)
-        if score_form.is_valid():
-            score = score_form.save(commit=False)
-            score.user  = request.user
-            score.hotel = hotel
-            score.save()
+    if request.method == "POST":
+        if request.user.is_authenticated:  
+            score_form = ScoreForm(request.POST)
+            if score_form.is_valid():
+                score = score_form.save(commit=False)
+                score.user  = request.user
+                score.hotel = hotel
+                score.save()
+        else:
+            return HttpResponseRedirect(reverse('AccountApp:login'))
     else:
         score_form = ScoreForm()
         
