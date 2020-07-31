@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
 class UserRegistrationForm(forms.ModelForm):
 
     #phone Number:
-    phone = forms.CharField(label='Phone number')
+    phone = forms.CharField(max_length=11, label='Phone number')
 
     #national ID:
     national_id = forms.CharField(label="National id")
@@ -32,7 +32,7 @@ class UserRegistrationForm(forms.ModelForm):
         cd = self.cleaned_data
 
         if (cd['password'] != cd['password2']):
-            raise forms.ValidationError('Passwords don\'t match !')
+            raise forms.ValidationError('Passwords do not match !')
             
         return cd['password2']
 
